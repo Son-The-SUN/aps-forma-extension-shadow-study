@@ -1,5 +1,6 @@
 import { Forma } from "forma-embedded-view-sdk/auto";
 import { DateTime } from "luxon";
+import { useTranslation } from "../i18n/useTranslation";
 
 function timeout(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -16,6 +17,7 @@ type PreviewButtonProps = {
 };
 
 export default function PreviewButton(props: PreviewButtonProps) {
+  const { t } = useTranslation();
   const { month, day, startHour, startMinute, endHour, endMinute, interval } = props;
 
   const onClickPreview = async () => {
@@ -62,7 +64,7 @@ export default function PreviewButton(props: PreviewButtonProps) {
   return (
     <div class="row">
       <weave-button variant="outlined" onClick={onClickPreview}>
-        Preview
+        {t("actions.preview")}
       </weave-button>
     </div>
   );

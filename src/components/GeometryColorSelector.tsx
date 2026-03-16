@@ -1,6 +1,7 @@
 import { Forma } from "forma-embedded-view-sdk/auto";
 import { useEffect, useState } from "preact/hooks";
 import { FormaElement, Urn } from "forma-embedded-view-sdk/elements/types";
+import { useTranslation } from "../i18n/useTranslation";
 
 /**
  *
@@ -87,6 +88,7 @@ export const debounce = <F extends (...args: any[]) => ReturnType<F>>(func: F, w
 };
 
 export default function GeometryColorSelector() {
+  const { t } = useTranslation();
   const [shouldPaintGeometry, setShouldPaintGeometry] = useState(false);
   const [shouldPaintTerrain, setShouldPaintTerrain] = useState(false);
 
@@ -137,7 +139,7 @@ export default function GeometryColorSelector() {
     <>
       <div class="row">
         <div class="row-title" style={{ width: "50%" }}>
-          Color geometry:
+          {t("geometry.colorGeometry")}:
         </div>
         <div class="row-item">
           <weave-checkbox
@@ -156,7 +158,7 @@ export default function GeometryColorSelector() {
       </div>
       <div class="row">
         <div class="row-title" style={{ width: "50%" }}>
-          Color terrain:
+          {t("geometry.colorTerrain")}:
         </div>
         <div class="row-item">
           <weave-checkbox

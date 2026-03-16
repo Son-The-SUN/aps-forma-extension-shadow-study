@@ -2,6 +2,7 @@ import { Forma } from "forma-embedded-view-sdk/auto";
 import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { DateTime } from "luxon";
+import { useTranslation } from "../i18n/useTranslation";
 
 type ExportButtonProps = {
   month: number;
@@ -15,6 +16,7 @@ type ExportButtonProps = {
 };
 
 export default function ExportButton(props: ExportButtonProps) {
+  const { t } = useTranslation();
   const { month, day, startHour, startMinute, endHour, endMinute, resolution, interval } = props;
 
   const onClickExport = async () => {
@@ -62,12 +64,11 @@ export default function ExportButton(props: ExportButtonProps) {
         current = current.plus({ minutes: interval });
       }
 
-      const folderName =
-        "Shadow study - " +
+      const dateStr =
         current.toLocaleString({ timeZone: projectTimezone, day: "2-digit" }) +
         " " +
-        current.toLocaleString({ timeZone: projectTimezone, month: "long" }) +
-        ".zip";
+        current.toLocaleString({ timeZone: projectTimezone, month: "long" });
+      const folderName = t("export.folderName", { date: dateStr }) + ".zip";
       zipFolder.generateAsync({ type: "blob" }).then((content) => saveAs(content, folderName));
 
       await Forma.sun.setDate({ date: currentDate });
@@ -79,7 +80,7 @@ export default function ExportButton(props: ExportButtonProps) {
   return (
     <div class="row">
       <weave-button variant={"solid"} onClick={onClickExport}>
-        Export images
+        {t("actions.exportImages")}
       </weave-button>
     </div>
   );
