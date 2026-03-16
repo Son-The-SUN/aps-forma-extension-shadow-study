@@ -12,13 +12,14 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - run: yarn install --frozen-lockfile
-      - run: yarn typecheck
-      - run: yarn prettier --check src
-      - run: yarn build
+      - run: pnpm install
+      - run: pnpm typecheck
+      - run: pnpm prettier --check src
+      - run: pnpm build
         if: github.ref != 'refs/heads/main'
 
   build:
@@ -28,13 +29,14 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
       - name: Build static files
         run: |
-          yarn install --frozen-lockfile
-          yarn build
+          pnpm install
+          pnpm build
       - uses: actions/configure-pages@v5
       - name: Upload static files to GitHub Pages
         uses: actions/upload-pages-artifact@v3

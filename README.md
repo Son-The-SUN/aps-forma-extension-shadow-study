@@ -59,7 +59,7 @@ point for making changes to the extension:
 All subcomponents used within the app live in
 `src/components/`.
 
-It is also worth noting that the Forma SDK is added as a dependency in `package.json` and automatically installed by using `yarn`:
+It is also worth noting that the Forma SDK is added as a dependency in `package.json` and automatically installed by using `pnpm`:
 
 ```json
   "dependencies": {
@@ -269,13 +269,13 @@ In order to work with this extension locally, you need to [create your own exten
 You can now install dependencies by running
 
 ```shell
-yarn install
+pnpm install
 ```
 
 and then you just need to run
 
 ```shell
-yarn start
+pnpm start
 ```
 
 Your local version of this extension should now be running on port `8081`, and it should be visible in the analysis panel on
