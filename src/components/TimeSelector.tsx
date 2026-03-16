@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { useTranslation } from "../i18n/useTranslation";
 
 const formatTime = (x: number) => (x < 10 ? "0" + x : x).toString();
 
@@ -14,6 +15,7 @@ type TimeSelectorProps = {
 };
 
 export default function TimeSelector(props: TimeSelectorProps) {
+  const { t } = useTranslation();
   const {
     startHour,
     setStartHour,
@@ -28,9 +30,9 @@ export default function TimeSelector(props: TimeSelectorProps) {
   return (
     <>
       <div class="row">
-        <div class="row-title">Time</div>
+        <div class="row-title">{t("time.label")}</div>
         <div class="row-item">
-          <div class="helpText">From</div>
+          <div class="helpText">{t("time.from")}</div>
           <weave-select
             value={startHour}
             onChange={(event) => setStartHour(parseInt((event as CustomEvent).detail.value, 10))}
@@ -54,7 +56,7 @@ export default function TimeSelector(props: TimeSelectorProps) {
       <div class="row">
         <div class="row-title"></div>
         <div class="row-item">
-          <div class="helpText">To</div>
+          <div class="helpText">{t("time.to")}</div>
           <weave-select
             value={endHour}
             onChange={(event) => setEndHour(parseInt((event as CustomEvent).detail.value, 10))}

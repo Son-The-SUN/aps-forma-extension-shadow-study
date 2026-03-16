@@ -11,8 +11,10 @@
     "prettier:write": "pnpm prettier --write src"
   },
   "dependencies": {
+    "@preact/signals": "^2.0.1",
     "file-saver": "^2.0.5",
     "forma-embedded-view-sdk": "^0.87.0",
+    "i18next": "^25.6.3",
     "jszip": "3.10.1",
     "lodash": "^4.17.21",
     "luxon": "^3.4.4",

@@ -6,8 +6,10 @@ import ResolutionSelector from "./components/ResolutionSelector";
 import TimeSelector from "./components/TimeSelector";
 import PreviewButton from "./components/PreviewButton";
 import GeometryColorSelector from "./components/GeometryColorSelector";
+import { useTranslation } from "./i18n/useTranslation";
 
 export default function App() {
+  const { t } = useTranslation();
   const [month, setMonth] = useState(6);
   const [day, setDay] = useState(15);
   const [interval, setInterval] = useState(60);
@@ -19,7 +21,7 @@ export default function App() {
 
   return (
     <>
-      <h1>Shadow study</h1>
+      <h1>{t("header.title")}</h1>
       <DateSelector month={month} setMonth={setMonth} day={day} setDay={setDay} />
       <TimeSelector
         startHour={startHour}

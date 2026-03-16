@@ -1,0 +1,17 @@
+name: Notify l10n of source string changes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/i18n/translations/en-US/**"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.L10N_REPO_TOKEN }}
+          repository: spacemakerai/shadow-study-l10n
+          event-type: source-strings-updated
