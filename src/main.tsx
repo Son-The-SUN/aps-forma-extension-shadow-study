@@ -8,8 +8,10 @@ if (langOverride) {
   i18n.changeLanguage(langOverride);
 }
 
-Forma.onLocaleUpdate(({ locale }) => {
-  i18n.changeLanguage(locale);
-});
+if (typeof Forma.onLocaleUpdate === "function") {
+  Forma.onLocaleUpdate(({ locale }) => {
+    i18n.changeLanguage(locale);
+  });
+}
 
 render(<App />, document.getElementById("app")!);
