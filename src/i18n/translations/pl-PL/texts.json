@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Eksportuj obrazy",
+    "preview": "Podgląd"
+  },
+  "date": {
+    "label": "Data"
+  },
+  "export": {
+    "folderName": "Badanie cieni - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "Co 2 godziny",
+    "every5min": "Co 5 minut",
+    "every15min": "Co 15 minut",
+    "every30min": "Co 30 minut",
+    "everyHour": "Co godzinę",
+    "label": "Częstotliwość"
+  },
+  "geometry": {
+    "colorGeometry": "Pokoloruj geometrię",
+    "colorTerrain": "Pokoloruj teren"
+  },
+  "header": {
+    "title": "Badanie cieni"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Rozmiar",
+    "large": "Duży ({{resolution}})",
+    "medium": "Średni ({{resolution}})",
+    "small": "Mały ({{resolution}})"
+  },
+  "time": {
+    "from": "Od",
+    "label": "Czas",
+    "to": "Do"
+  }
+}

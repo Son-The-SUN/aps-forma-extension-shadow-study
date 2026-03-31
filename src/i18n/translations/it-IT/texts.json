@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Esporta immagini",
+    "preview": "Anteprima"
+  },
+  "date": {
+    "label": "Data"
+  },
+  "export": {
+    "folderName": "Studio delle ombre - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "Ogni 2 ore",
+    "every5min": "Ogni 5 minuti",
+    "every15min": "Ogni 15 minuti",
+    "every30min": "Ogni 30 minuti",
+    "everyHour": "Ogni ora",
+    "label": "Frequenza"
+  },
+  "geometry": {
+    "colorGeometry": "Colora geometria",
+    "colorTerrain": "Colora terreno"
+  },
+  "header": {
+    "title": "Studio delle ombre"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Dimensione",
+    "large": "Grande ({{resolution}})",
+    "medium": "Medio ({{resolution}})",
+    "small": "Piccolo ({{resolution}})"
+  },
+  "time": {
+    "from": "Da",
+    "label": "Ora",
+    "to": "A"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Afbeeldingen exporteren",
+    "preview": "Voorbeeld"
+  },
+  "date": {
+    "label": "Datum"
+  },
+  "export": {
+    "folderName": "Schaduwstudie - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "Elke 2 uur",
+    "every5min": "Elke 5 minuten",
+    "every15min": "Elke 15 minuten",
+    "every30min": "Elke 30 minuten",
+    "everyHour": "Elk uur",
+    "label": "Frequentie"
+  },
+  "geometry": {
+    "colorGeometry": "Geometrie inkleuren",
+    "colorTerrain": "Terrein inkleuren"
+  },
+  "header": {
+    "title": "Schaduwstudie"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Formaat",
+    "large": "Groot ({{resolution}})",
+    "medium": "Gemiddeld ({{resolution}})",
+    "small": "Klein ({{resolution}})"
+  },
+  "time": {
+    "from": "Van",
+    "label": "Tijd",
+    "to": "Tot"
+  }
+}

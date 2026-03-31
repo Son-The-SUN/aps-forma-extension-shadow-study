@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "导出图像",
+    "preview": "预览"
+  },
+  "date": {
+    "label": "日期"
+  },
+  "export": {
+    "folderName": "阴影研究 - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "每2小时",
+    "every5min": "每5分钟",
+    "every15min": "每15分钟",
+    "every30min": "每30分钟",
+    "everyHour": "每小时",
+    "label": "频率"
+  },
+  "geometry": {
+    "colorGeometry": "着色几何体",
+    "colorTerrain": "着色地形"
+  },
+  "header": {
+    "title": "阴影研究"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "尺寸",
+    "large": "大 ({{resolution}})",
+    "medium": "中 ({{resolution}})",
+    "small": "小 ({{resolution}})"
+  },
+  "time": {
+    "from": "从",
+    "label": "时间",
+    "to": "到"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Exporter les images",
+    "preview": "Aperçu"
+  },
+  "date": {
+    "label": "Date"
+  },
+  "export": {
+    "folderName": "Étude d'ombres - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "Toutes les 2 heures",
+    "every5min": "Toutes les 5 minutes",
+    "every15min": "Toutes les 15 minutes",
+    "every30min": "Toutes les 30 minutes",
+    "everyHour": "Chaque heure",
+    "label": "Fréquence"
+  },
+  "geometry": {
+    "colorGeometry": "Colorer la géométrie",
+    "colorTerrain": "Colorer le terrain"
+  },
+  "header": {
+    "title": "Étude d'ombres"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Taille",
+    "large": "Grand ({{resolution}})",
+    "medium": "Moyen ({{resolution}})",
+    "small": "Petit ({{resolution}})"
+  },
+  "time": {
+    "from": "De",
+    "label": "Heure",
+    "to": "À"
+  }
+}

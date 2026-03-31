@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Exportovat obrázky",
+    "preview": "Náhled"
+  },
+  "date": {
+    "label": "Datum"
+  },
+  "export": {
+    "folderName": "Studie stínů - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "Každé 2 hodiny",
+    "every5min": "Každých 5 minut",
+    "every15min": "Každých 15 minut",
+    "every30min": "Každých 30 minut",
+    "everyHour": "Každou hodinu",
+    "label": "Frekvence"
+  },
+  "geometry": {
+    "colorGeometry": "Obarvit geometrii",
+    "colorTerrain": "Obarvit terén"
+  },
+  "header": {
+    "title": "Studie stínů"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Velikost",
+    "large": "Velký ({{resolution}})",
+    "medium": "Střední ({{resolution}})",
+    "small": "Malý ({{resolution}})"
+  },
+  "time": {
+    "from": "Od",
+    "label": "Čas",
+    "to": "Do"
+  }
+}

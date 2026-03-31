@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "匯出圖像",
+    "preview": "預覽"
+  },
+  "date": {
+    "label": "日期"
+  },
+  "export": {
+    "folderName": "陰影研究 - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "每2小時",
+    "every5min": "每5分鐘",
+    "every15min": "每15分鐘",
+    "every30min": "每30分鐘",
+    "everyHour": "每小時",
+    "label": "頻率"
+  },
+  "geometry": {
+    "colorGeometry": "著色幾何體",
+    "colorTerrain": "著色地形"
+  },
+  "header": {
+    "title": "陰影研究"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "尺寸",
+    "large": "大 ({{resolution}})",
+    "medium": "中 ({{resolution}})",
+    "small": "小 ({{resolution}})"
+  },
+  "time": {
+    "from": "從",
+    "label": "時間",
+    "to": "到"
+  }
+}

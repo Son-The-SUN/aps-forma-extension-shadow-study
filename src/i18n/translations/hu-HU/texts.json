@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Képek exportálása",
+    "preview": "Előnézet"
+  },
+  "date": {
+    "label": "Dátum"
+  },
+  "export": {
+    "folderName": "Árnyéktanulmány - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "2 óránként",
+    "every5min": "5 percenként",
+    "every15min": "15 percenként",
+    "every30min": "30 percenként",
+    "everyHour": "Óránként",
+    "label": "Gyakoriság"
+  },
+  "geometry": {
+    "colorGeometry": "Geometria színezése",
+    "colorTerrain": "Terep színezése"
+  },
+  "header": {
+    "title": "Árnyéktanulmány"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Méret",
+    "large": "Nagy ({{resolution}})",
+    "medium": "Közepes ({{resolution}})",
+    "small": "Kicsi ({{resolution}})"
+  },
+  "time": {
+    "from": "Kezdő",
+    "label": "Idő",
+    "to": "Vég"
+  }
+}

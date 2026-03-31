@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Exportar imagens",
+    "preview": "Visualizar"
+  },
+  "date": {
+    "label": "Data"
+  },
+  "export": {
+    "folderName": "Estudo de sombras - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "A cada 2 horas",
+    "every5min": "A cada 5 minutos",
+    "every15min": "A cada 15 minutos",
+    "every30min": "A cada 30 minutos",
+    "everyHour": "A cada hora",
+    "label": "Frequência"
+  },
+  "geometry": {
+    "colorGeometry": "Colorir geometria",
+    "colorTerrain": "Colorir terreno"
+  },
+  "header": {
+    "title": "Estudo de sombras"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Tamanho",
+    "large": "Grande ({{resolution}})",
+    "medium": "Médio ({{resolution}})",
+    "small": "Pequeno ({{resolution}})"
+  },
+  "time": {
+    "from": "De",
+    "label": "Hora",
+    "to": "Até"
+  }
+}

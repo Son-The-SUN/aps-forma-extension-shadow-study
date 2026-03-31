@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Export images",
+    "preview": "Preview"
+  },
+  "date": {
+    "label": "Date"
+  },
+  "export": {
+    "folderName": "Shadow study - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "Every 2nd hour",
+    "every5min": "Every 5th minute",
+    "every15min": "Every 15th minute",
+    "every30min": "Every 30th minute",
+    "everyHour": "Every hour",
+    "label": "Frequency"
+  },
+  "geometry": {
+    "colorGeometry": "Colour geometry",
+    "colorTerrain": "Colour terrain"
+  },
+  "header": {
+    "title": "Shadow study"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Size",
+    "large": "Large ({{resolution}})",
+    "medium": "Medium ({{resolution}})",
+    "small": "Small ({{resolution}})"
+  },
+  "time": {
+    "from": "From",
+    "label": "Time",
+    "to": "To"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "画像をエクスポート",
+    "preview": "プレビュー"
+  },
+  "date": {
+    "label": "日付"
+  },
+  "export": {
+    "folderName": "日影調査 - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "2時間ごと",
+    "every5min": "5分ごと",
+    "every15min": "15分ごと",
+    "every30min": "30分ごと",
+    "everyHour": "1時間ごと",
+    "label": "頻度"
+  },
+  "geometry": {
+    "colorGeometry": "ジオメトリの色分け",
+    "colorTerrain": "地形の色分け"
+  },
+  "header": {
+    "title": "日影調査"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "サイズ",
+    "large": "大 ({{resolution}})",
+    "medium": "中 ({{resolution}})",
+    "small": "小 ({{resolution}})"
+  },
+  "time": {
+    "from": "開始",
+    "label": "時間",
+    "to": "終了"
+  }
+}

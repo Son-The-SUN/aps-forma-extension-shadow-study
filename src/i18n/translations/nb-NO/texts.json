@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Eksporter bilder",
+    "preview": "Forhåndsvisning"
+  },
+  "date": {
+    "label": "Dato"
+  },
+  "export": {
+    "folderName": "Skyggestudie - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "Hver 2. time",
+    "every5min": "Hvert 5. minutt",
+    "every15min": "Hvert 15. minutt",
+    "every30min": "Hvert 30. minutt",
+    "everyHour": "Hver time",
+    "label": "Frekvens"
+  },
+  "geometry": {
+    "colorGeometry": "Fargelegg geometri",
+    "colorTerrain": "Fargelegg terreng"
+  },
+  "header": {
+    "title": "Skyggestudie"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Størrelse",
+    "large": "Stor ({{resolution}})",
+    "medium": "Middels ({{resolution}})",
+    "small": "Liten ({{resolution}})"
+  },
+  "time": {
+    "from": "Fra",
+    "label": "Tid",
+    "to": "Til"
+  }
+}

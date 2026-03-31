@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Bilder exportieren",
+    "preview": "Vorschau"
+  },
+  "date": {
+    "label": "Datum"
+  },
+  "export": {
+    "folderName": "Schattenstudie - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "Alle 2 Stunden",
+    "every5min": "Alle 5 Minuten",
+    "every15min": "Alle 15 Minuten",
+    "every30min": "Alle 30 Minuten",
+    "everyHour": "Jede Stunde",
+    "label": "Häufigkeit"
+  },
+  "geometry": {
+    "colorGeometry": "Geometrie einfärben",
+    "colorTerrain": "Gelände einfärben"
+  },
+  "header": {
+    "title": "Schattenstudie"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Größe",
+    "large": "Groß ({{resolution}})",
+    "medium": "Mittel ({{resolution}})",
+    "small": "Klein ({{resolution}})"
+  },
+  "time": {
+    "from": "Von",
+    "label": "Zeit",
+    "to": "Bis"
+  }
+}

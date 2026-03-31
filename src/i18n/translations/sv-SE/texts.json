@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "exportImages": "Exportera bilder",
+    "preview": "Förhandsvisning"
+  },
+  "date": {
+    "label": "Datum"
+  },
+  "export": {
+    "folderName": "Skuggstudie - {{date}}"
+  },
+  "frequency": {
+    "every2hours": "Varannan timme",
+    "every5min": "Var 5:e minut",
+    "every15min": "Var 15:e minut",
+    "every30min": "Var 30:e minut",
+    "everyHour": "Varje timme",
+    "label": "Frekvens"
+  },
+  "geometry": {
+    "colorGeometry": "Färglägg geometri",
+    "colorTerrain": "Färglägg terräng"
+  },
+  "header": {
+    "title": "Skuggstudie"
+  },
+  "size": {
+    "fourK": "4K ({{resolution}})",
+    "label": "Storlek",
+    "large": "Stor ({{resolution}})",
+    "medium": "Medel ({{resolution}})",
+    "small": "Liten ({{resolution}})"
+  },
+  "time": {
+    "from": "Från",
+    "label": "Tid",
+    "to": "Till"
+  }
+}
