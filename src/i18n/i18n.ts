@@ -38,7 +38,9 @@ export const resolveLocale = (locale: string) => {
   if (supportedLocales.has(bcp47)) return bcp47;
 
   const language = bcp47.split("-")[0];
-  const languageMatch = [...supportedLocales].find((supported) => supported.startsWith(`${language}-`));
+  const languageMatch = [...supportedLocales].find((supported) =>
+    supported.startsWith(`${language}-`),
+  );
   return languageMatch ?? "en-US";
 };
 

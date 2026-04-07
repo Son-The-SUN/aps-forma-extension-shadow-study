@@ -26,7 +26,9 @@ export default function DateSelector(props: DateSelectorProps) {
         >
           {/* Luxon uses 1-indexed months, so we add 1 to the value */}
           {_.range(12).map((index) => (
-            <weave-select-option value={index + 1}>{getMonthName(index, locale)}</weave-select-option>
+            <weave-select-option value={index + 1}>
+              {getMonthName(index, locale)}
+            </weave-select-option>
           ))}
         </weave-select>
         <weave-select
