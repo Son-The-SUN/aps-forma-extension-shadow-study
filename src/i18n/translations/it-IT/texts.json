@@ -1,6 +1,6 @@
 {
   "actions": {
-    "exportImages": "Esporta immagini",
+    "exportImages": "Esportazione di immagini",
     "preview": "Anteprima"
   },
   "date": {
@@ -11,14 +11,14 @@
   },
   "frequency": {
     "every2hours": "Ogni 2 ore",
-    "every5min": "Ogni 5 minuti",
+    "every5min": "Ogni 5° minuto",
     "every15min": "Ogni 15 minuti",
     "every30min": "Ogni 30 minuti",
     "everyHour": "Ogni ora",
     "label": "Frequenza"
   },
   "geometry": {
-    "colorGeometry": "Colora geometria",
+    "colorGeometry": "Geometria colore",
     "colorTerrain": "Colora terreno"
   },
   "header": {
@@ -33,7 +33,7 @@
   },
   "time": {
     "from": "Da",
-    "label": "Ora",
+    "label": "Data e ora",
     "to": "A"
   }
 }

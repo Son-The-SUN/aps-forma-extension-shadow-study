@@ -7,26 +7,26 @@
     "label": "Datum"
   },
   "export": {
-    "folderName": "Schaduwstudie - {{date}}"
+    "folderName": "Schaduwonderzoek - {{date}}"
   },
   "frequency": {
-    "every2hours": "Elke 2 uur",
-    "every5min": "Elke 5 minuten",
-    "every15min": "Elke 15 minuten",
-    "every30min": "Elke 30 minuten",
+    "every2hours": "Elk 2e uur",
+    "every5min": "Elke 5e minuut",
+    "every15min": "Elke 15e minuut",
+    "every30min": "Elke 30e minuut",
     "everyHour": "Elk uur",
     "label": "Frequentie"
   },
   "geometry": {
-    "colorGeometry": "Geometrie inkleuren",
-    "colorTerrain": "Terrein inkleuren"
+    "colorGeometry": "Kleur geometrie",
+    "colorTerrain": "Kleur terrein"
   },
   "header": {
-    "title": "Schaduwstudie"
+    "title": "Schaduwonderzoek"
   },
   "size": {
     "fourK": "4K ({{resolution}})",
-    "label": "Formaat",
+    "label": "Grootte",
     "large": "Groot ({{resolution}})",
     "medium": "Gemiddeld ({{resolution}})",
     "small": "Klein ({{resolution}})"

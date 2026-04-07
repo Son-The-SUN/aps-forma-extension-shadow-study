@@ -1,6 +1,6 @@
 {
   "actions": {
-    "exportImages": "Bilder exportieren",
+    "exportImages": "Exportieren von Bildern",
     "preview": "Vorschau"
   },
   "date": {
@@ -10,12 +10,12 @@
     "folderName": "Schattenstudie - {{date}}"
   },
   "frequency": {
-    "every2hours": "Alle 2 Stunden",
-    "every5min": "Alle 5 Minuten",
-    "every15min": "Alle 15 Minuten",
-    "every30min": "Alle 30 Minuten",
+    "every2hours": "Jede 2. Stunde",
+    "every5min": "Jede 5. Minute",
+    "every15min": "Jede 15. Minute",
+    "every30min": "Jede 30. Minute",
     "everyHour": "Jede Stunde",
-    "label": "Häufigkeit"
+    "label": "Frequenz"
   },
   "geometry": {
     "colorGeometry": "Geometrie einfärben",

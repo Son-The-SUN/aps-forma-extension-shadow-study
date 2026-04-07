@@ -7,22 +7,22 @@
     "label": "Dátum"
   },
   "export": {
-    "folderName": "Árnyéktanulmány - {{date}}"
+    "folderName": "árnyékvizsgálat - {{date}}"
   },
   "frequency": {
-    "every2hours": "2 óránként",
-    "every5min": "5 percenként",
-    "every15min": "15 percenként",
-    "every30min": "30 percenként",
-    "everyHour": "Óránként",
-    "label": "Gyakoriság"
+    "every2hours": "Minden második órában",
+    "every5min": "Minden 5. percben",
+    "every15min": "Minden 15. percben",
+    "every30min": "Minden 30. percben",
+    "everyHour": "Minden órában",
+    "label": "Frequency"
   },
   "geometry": {
-    "colorGeometry": "Geometria színezése",
-    "colorTerrain": "Terep színezése"
+    "colorGeometry": "Színes geometria",
+    "colorTerrain": "Szín terep"
   },
   "header": {
-    "title": "Árnyéktanulmány"
+    "title": "Árnyékvizsgálat"
   },
   "size": {
     "fourK": "4K ({{resolution}})",
@@ -32,8 +32,8 @@
     "small": "Kicsi ({{resolution}})"
   },
   "time": {
-    "from": "Kezdő",
+    "from": "Ettől:",
     "label": "Idő",
-    "to": "Vég"
+    "to": "Eddig:"
   }
 }

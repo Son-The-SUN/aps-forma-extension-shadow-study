@@ -1,13 +1,13 @@
 {
   "actions": {
-    "exportImages": "Eksportér billeder",
-    "preview": "Forhåndsvisning"
+    "exportImages": "Eksport af billeder",
+    "preview": "Forhåndsvis"
   },
   "date": {
     "label": "Dato"
   },
   "export": {
-    "folderName": "Skyggestudie - {{date}}"
+    "folderName": "Skyggeundersøgelse - {{date}}"
   },
   "frequency": {
     "every2hours": "Hver 2. time",
@@ -18,17 +18,17 @@
     "label": "Frekvens"
   },
   "geometry": {
-    "colorGeometry": "Farvelæg geometri",
-    "colorTerrain": "Farvelæg terræn"
+    "colorGeometry": "Farvegeometri",
+    "colorTerrain": "Farve terræn"
   },
   "header": {
-    "title": "Skyggestudie"
+    "title": "Skyggeundersøgelse"
   },
   "size": {
     "fourK": "4K ({{resolution}})",
     "label": "Størrelse",
     "large": "Stor ({{resolution}})",
-    "medium": "Medium ({{resolution}})",
+    "medium": "Mellem ({{resolution}})",
     "small": "Lille ({{resolution}})"
   },
   "time": {

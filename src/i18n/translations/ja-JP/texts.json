@@ -1,28 +1,28 @@
 {
   "actions": {
-    "exportImages": "画像をエクスポート",
+    "exportImages": "イメージのエクスポート",
     "preview": "プレビュー"
   },
   "date": {
     "label": "日付"
   },
   "export": {
-    "folderName": "日影調査 - {{date}}"
+    "folderName": "影シミュレーション - {{date}}"
   },
   "frequency": {
-    "every2hours": "2時間ごと",
-    "every5min": "5分ごと",
-    "every15min": "15分ごと",
-    "every30min": "30分ごと",
-    "everyHour": "1時間ごと",
-    "label": "頻度"
+    "every2hours": "2 時間ごと",
+    "every5min": "5 分ごと",
+    "every15min": "15 分ごと",
+    "every30min": "30 分ごと",
+    "everyHour": "1 時間ごと",
+    "label": "周期"
   },
   "geometry": {
-    "colorGeometry": "ジオメトリの色分け",
-    "colorTerrain": "地形の色分け"
+    "colorGeometry": "カラー ジオメトリ",
+    "colorTerrain": "カラー地形"
   },
   "header": {
-    "title": "日影調査"
+    "title": "影シミュレーション"
   },
   "size": {
     "fourK": "4K ({{resolution}})",
@@ -32,8 +32,8 @@
     "small": "小 ({{resolution}})"
   },
   "time": {
-    "from": "開始",
-    "label": "時間",
-    "to": "終了"
+    "from": "自",
+    "label": "時刻",
+    "to": "至"
   }
 }

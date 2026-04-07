@@ -1,16 +1,16 @@
 {
   "actions": {
-    "exportImages": "Eksportuj obrazy",
+    "exportImages": "Eksportowanie obrazów",
     "preview": "Podgląd"
   },
   "date": {
     "label": "Data"
   },
   "export": {
-    "folderName": "Badanie cieni - {{date}}"
+    "folderName": "Analiza zacienienia - {{date}}"
   },
   "frequency": {
-    "every2hours": "Co 2 godziny",
+    "every2hours": "Co 2. godzinę",
     "every5min": "Co 5 minut",
     "every15min": "Co 15 minut",
     "every30min": "Co 30 minut",
@@ -18,8 +18,8 @@
     "label": "Częstotliwość"
   },
   "geometry": {
-    "colorGeometry": "Pokoloruj geometrię",
-    "colorTerrain": "Pokoloruj teren"
+    "colorGeometry": "Koloruj geometrię",
+    "colorTerrain": "Kolor terenu"
   },
   "header": {
     "title": "Badanie cieni"
@@ -33,7 +33,7 @@
   },
   "time": {
     "from": "Od",
-    "label": "Czas",
+    "label": "Godzina",
     "to": "Do"
   }
 }

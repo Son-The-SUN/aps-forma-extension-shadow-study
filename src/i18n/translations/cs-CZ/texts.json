@@ -1,28 +1,28 @@
 {
   "actions": {
-    "exportImages": "Exportovat obrázky",
+    "exportImages": "Export obrázků",
     "preview": "Náhled"
   },
   "date": {
     "label": "Datum"
   },
   "export": {
-    "folderName": "Studie stínů - {{date}}"
+    "folderName": "studie zastínění – {{date}}"
   },
   "frequency": {
-    "every2hours": "Každé 2 hodiny",
-    "every5min": "Každých 5 minut",
+    "every2hours": "Každá 2. hodina",
+    "every5min": "Každá 5. minuta",
     "every15min": "Každých 15 minut",
     "every30min": "Každých 30 minut",
     "everyHour": "Každou hodinu",
     "label": "Frekvence"
   },
   "geometry": {
-    "colorGeometry": "Obarvit geometrii",
-    "colorTerrain": "Obarvit terén"
+    "colorGeometry": "Barevná geometrie",
+    "colorTerrain": "Barevný terén"
   },
   "header": {
-    "title": "Studie stínů"
+    "title": "Studie zastínění"
   },
   "size": {
     "fourK": "4K ({{resolution}})",

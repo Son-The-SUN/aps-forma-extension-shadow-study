@@ -12,13 +12,13 @@
   "frequency": {
     "every2hours": "Cada 2 horas",
     "every5min": "Cada 5 minutos",
-    "every15min": "Cada 15 minutos",
-    "every30min": "Cada 30 minutos",
+    "every15min": "Cada minuto 15",
+    "every30min": "Cada minuto 30",
     "everyHour": "Cada hora",
     "label": "Frecuencia"
   },
   "geometry": {
-    "colorGeometry": "Colorear geometría",
+    "colorGeometry": "Geometría de color",
     "colorTerrain": "Colorear terreno"
   },
   "header": {
@@ -28,12 +28,12 @@
     "fourK": "4K ({{resolution}})",
     "label": "Tamaño",
     "large": "Grande ({{resolution}})",
-    "medium": "Mediano ({{resolution}})",
+    "medium": "Medio ({{resolution}})",
     "small": "Pequeño ({{resolution}})"
   },
   "time": {
-    "from": "Desde",
-    "label": "Tiempo",
-    "to": "Hasta"
+    "from": "De",
+    "label": "Hora",
+    "to": "A"
   }
 }

@@ -10,7 +10,7 @@
     "folderName": "그림자 연구 - {{date}}"
   },
   "frequency": {
-    "every2hours": "2시간마다",
+    "every2hours": "매 2시간",
     "every5min": "5분마다",
     "every15min": "15분마다",
     "every30min": "30분마다",
@@ -18,22 +18,22 @@
     "label": "빈도"
   },
   "geometry": {
-    "colorGeometry": "지오메트리 색상 지정",
-    "colorTerrain": "지형 색상 지정"
+    "colorGeometry": "색상 형상",
+    "colorTerrain": "색상 지형"
   },
   "header": {
     "title": "그림자 연구"
   },
   "size": {
-    "fourK": "4K ({{resolution}})",
+    "fourK": "4K({{resolution}})",
     "label": "크기",
-    "large": "크게 ({{resolution}})",
-    "medium": "보통 ({{resolution}})",
-    "small": "작게 ({{resolution}})"
+    "large": "크게({{resolution}})",
+    "medium": "중간({{resolution}})",
+    "small": "작음({{resolution}})"
   },
   "time": {
     "from": "시작",
     "label": "시간",
-    "to": "종료"
+    "to": "끝"
   }
 }

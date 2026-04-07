@@ -10,16 +10,16 @@
     "folderName": "Skyggestudie - {{date}}"
   },
   "frequency": {
-    "every2hours": "Hver 2. time",
-    "every5min": "Hvert 5. minutt",
+    "every2hours": "Hver andre time",
+    "every5min": "Hvert femte minutt",
     "every15min": "Hvert 15. minutt",
     "every30min": "Hvert 30. minutt",
     "everyHour": "Hver time",
     "label": "Frekvens"
   },
   "geometry": {
-    "colorGeometry": "Fargelegg geometri",
-    "colorTerrain": "Fargelegg terreng"
+    "colorGeometry": "Fargegeometri",
+    "colorTerrain": "Fargeterreng"
   },
   "header": {
     "title": "Skyggestudie"
@@ -28,7 +28,7 @@
     "fourK": "4K ({{resolution}})",
     "label": "Størrelse",
     "large": "Stor ({{resolution}})",
-    "medium": "Middels ({{resolution}})",
+    "medium": "Medium ({{resolution}})",
     "small": "Liten ({{resolution}})"
   },
   "time": {
