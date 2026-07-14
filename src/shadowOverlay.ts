@@ -64,13 +64,21 @@ class ShadowOverlay {
     this.bbox = bbox;
     if (geoLocation) {
       [this.latitude, this.longitude] = geoLocation;
+      console.debug(`[shadow-study] project location: lat ${this.latitude}, lon ${this.longitude}`);
+    } else {
+      console.warn(
+        "[shadow-study] project has no geolocation -- shadow overlay directions will be wrong",
+      );
     }
     const center = { x: (bbox.min.x + bbox.max.x) / 2, y: (bbox.min.y + bbox.max.y) / 2 };
     this.groundElevation = await Forma.terrain.getElevationAt(center);
 
     for (const group of ["context", "design"] as ShadowGroup[]) {
-      this.positions[group] = await Promise.all(
+      const meshes = await Promise.all(
         groupPaths[group].map((path) => Forma.geometry.getTriangles({ path })),
+      );
+      this.positions[group] = meshes.filter((mesh, index) =>
+        this.isShadowCaster(mesh, group, groupPaths[group][index]),
       );
     }
 
@@ -78,6 +86,41 @@ class ShadowOverlay {
     this.lastDrawKey = "";
     this.requestRefresh();
     this.startPolling();
+  }
+
+  /**
+   * Keep only meshes that can cast a meaningful shadow, filtering out flat
+   * overlays (roads, zones, site limits) which have no height. Near-ground
+   * geometry such as terrain is additionally filtered per triangle when
+   * drawing.
+   */
+  private isShadowCaster(mesh: Float32Array, group: ShadowGroup, path: string): boolean {
+    if (mesh.length < 9) {
+      return false;
+    }
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+    let minZ = Infinity;
+    let maxZ = -Infinity;
+    for (let i = 0; i + 2 < mesh.length; i += 3) {
+      minX = Math.min(minX, mesh[i]);
+      maxX = Math.max(maxX, mesh[i]);
+      minY = Math.min(minY, mesh[i + 1]);
+      maxY = Math.max(maxY, mesh[i + 1]);
+      minZ = Math.min(minZ, mesh[i + 2]);
+      maxZ = Math.max(maxZ, mesh[i + 2]);
+    }
+
+    const keep = maxZ - minZ >= 0.5;
+    console.debug(
+      `[shadow-study] ${group} caster ${path}: ` +
+        `xy ${(maxX - minX).toFixed(0)}x${(maxY - minY).toFixed(0)}m, ` +
+        `z ${minZ.toFixed(1)}..${maxZ.toFixed(1)}m, ` +
+        `${mesh.length / 9} triangles -> ${keep ? "kept" : "skipped (flat)"}`,
+    );
+    return keep;
   }
 
   setSettings(settings: ShadowOverlaySettings): void {
@@ -157,6 +200,13 @@ class ShadowOverlay {
 
     if (anyShadows) {
       const { azimuth, altitude } = getPosition(sunDate, this.latitude, this.longitude);
+      const shadowBearing = (((azimuth * 180) / Math.PI + 360) % 360).toFixed(1);
+      console.debug(
+        `[shadow-study] sun for ${sunDate.toISOString()}: ` +
+          `azimuth ${((azimuth * 180) / Math.PI).toFixed(1)}deg from south towards west, ` +
+          `altitude ${((altitude * 180) / Math.PI).toFixed(1)}deg, ` +
+          `shadow bearing ${shadowBearing}deg from north`,
+      );
       // Only draw shadows while the sun is above the horizon.
       if (altitude > 0.01) {
         // suncalc azimuth is measured from south towards west; convert to a
@@ -175,10 +225,16 @@ class ShadowOverlay {
       }
     }
 
+    // The position is where the center of the canvas is placed, which is the
+    // center of the terrain bounding box the canvas was drawn to cover.
     await Forma.terrain.groundTexture.add({
       name: GROUND_TEXTURE_NAME,
       canvas,
-      position: { x: 0, y: 0, z: 0 },
+      position: {
+        x: this.bbox.min.x + width / 2,
+        y: this.bbox.max.y - height / 2,
+        z: 0,
+      },
       scale: { x: 1, y: 1 },
     });
     this.textureVisible = true;
