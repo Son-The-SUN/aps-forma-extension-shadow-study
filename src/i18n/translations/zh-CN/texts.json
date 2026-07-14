@@ -38,5 +38,8 @@
     "from": "自",
     "label": "时间",
     "to": "到"
+  },
+  "visibility": {
+    "title": "可见性"
   }
 }

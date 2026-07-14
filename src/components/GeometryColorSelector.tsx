@@ -26,32 +26,42 @@ function isTerrainElement(urn: Urn, element: FormaElement): boolean {
 }
 
 /**
- * Group the paths of all elements in the hierarchy into context elements
- * (imported surroundings from the integrate element system) and design
- * elements (everything else). Terrain elements are excluded since the
- * terrain is colored through the ground texture instead.
+ * Group the paths of all elements in the hierarchy into design elements
+ * (imported through the integrate element system, e.g. uploaded building
+ * models) and context elements (everything else, such as the provisioned
+ * surroundings). Terrain elements are excluded since the terrain is colored
+ * through the ground texture instead.
  */
 function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): ElementGroups {
   const groups: ElementGroups = { context: [], design: [] };
 
-  const walk = (urn: Urn, path: string, inContext: boolean) => {
+  const walk = (urn: Urn, path: string, inDesign: boolean) => {
     const element = elements[urn];
     if (element == null || isTerrainElement(urn, element)) {
       return;
     }
 
-    const isContext = inContext || getElementSystem(urn) === "integrate";
+    const isDesign = inDesign || getElementSystem(urn) === "integrate";
     if (path !== "root") {
-      (isContext ? groups.context : groups.design).push(path);
+      (isDesign ? groups.design : groups.context).push(path);
     }
 
     for (const child of element.children ?? []) {
-      walk(child.urn, `${path}/${child.key}`, isContext);
+      walk(child.urn, `${path}/${child.key}`, isDesign);
     }
   };
 
   walk(rootUrn, "root", false);
   return groups;
+}
+
+/**
+ * Reduce a group of paths to only the topmost ones, since hiding an element
+ * also hides all of its children.
+ */
+function topLevelPaths(paths: string[]): string[] {
+  const set = new Set(paths);
+  return paths.filter((path) => !set.has(path.slice(0, path.lastIndexOf("/"))));
 }
 
 /**
@@ -131,6 +141,9 @@ function ColorRow({ label, checked, setChecked, color, setColor }: ColorRowProps
 export default function GeometryColorSelector() {
   const { t } = useTranslation();
 
+  const [showContext, setShowContext] = useState(true);
+  const [showDesign, setShowDesign] = useState(true);
+
   const [shouldPaintContext, setShouldPaintContext] = useState(false);
   const [shouldPaintDesign, setShouldPaintDesign] = useState(false);
   const [shouldPaintTerrain, setShouldPaintTerrain] = useState(false);
@@ -195,6 +208,26 @@ export default function GeometryColorSelector() {
   }, [shouldPaintContext, shouldPaintDesign, contextColor, designColor, elementGroups]);
 
   useEffect(() => {
+    for (const path of topLevelPaths(elementGroups.context)) {
+      if (showContext) {
+        Forma.render.unhideElement({ path });
+      } else {
+        Forma.render.hideElement({ path });
+      }
+    }
+  }, [showContext, elementGroups]);
+
+  useEffect(() => {
+    for (const path of topLevelPaths(elementGroups.design)) {
+      if (showDesign) {
+        Forma.render.unhideElement({ path });
+      } else {
+        Forma.render.hideElement({ path });
+      }
+    }
+  }, [showDesign, elementGroups]);
+
+  useEffect(() => {
     if (shouldPaintTerrain) {
       colorGround(terrainColor);
     } else {
@@ -239,6 +272,27 @@ export default function GeometryColorSelector() {
         <weave-button variant="flat" onClick={onResetColors}>
           {t("colorConfig.resetColors")}
         </weave-button>
+      </div>
+      <div class="section-title">{t("visibility.title")}</div>
+      <div class="row">
+        <div class="row-title">
+          <weave-checkbox
+            checked={showContext}
+            label={t("colorConfig.contextBuildings")}
+            showlabel
+            onChange={(e) => setShowContext(e.detail.checked)}
+          ></weave-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-title">
+          <weave-checkbox
+            checked={showDesign}
+            label={t("colorConfig.designBuildings")}
+            showlabel
+            onChange={(e) => setShowDesign(e.detail.checked)}
+          ></weave-checkbox>
+        </div>
       </div>
     </>
   );

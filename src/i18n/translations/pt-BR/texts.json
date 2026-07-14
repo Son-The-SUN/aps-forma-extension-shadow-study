@@ -38,5 +38,8 @@
     "from": "De",
     "label": "Hora",
     "to": "Para"
+  },
+  "visibility": {
+    "title": "Visibilidade"
   }
 }

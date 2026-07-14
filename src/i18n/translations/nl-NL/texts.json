@@ -38,5 +38,8 @@
     "from": "Van",
     "label": "Tijd",
     "to": "Tot"
+  },
+  "visibility": {
+    "title": "Zichtbaarheid"
   }
 }

@@ -38,5 +38,8 @@
     "from": "Von",
     "label": "Zeit",
     "to": "Bis"
+  },
+  "visibility": {
+    "title": "Sichtbarkeit"
   }
 }

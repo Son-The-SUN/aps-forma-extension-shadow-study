@@ -38,5 +38,8 @@
     "from": "Od",
     "label": "Čas",
     "to": "Do"
+  },
+  "visibility": {
+    "title": "Viditelnost"
   }
 }

@@ -38,5 +38,8 @@
     "from": "Od",
     "label": "Godzina",
     "to": "Do"
+  },
+  "visibility": {
+    "title": "Widoczność"
   }
 }
