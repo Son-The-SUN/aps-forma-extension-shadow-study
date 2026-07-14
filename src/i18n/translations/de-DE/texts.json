@@ -8,7 +8,9 @@
     "contextBuildings": "Kontextgebäude",
     "designBuildings": "Entwurfsgebäude",
     "terrain": "Gelände",
-    "resetColors": "Farben zurücksetzen"
+    "resetColors": "Farben zurücksetzen",
+    "contextShadows": "Kontextschatten",
+    "designShadows": "Entwurfsschatten"
   },
   "date": {
     "label": "Datum"

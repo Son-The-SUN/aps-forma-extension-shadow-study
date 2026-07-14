@@ -8,7 +8,9 @@
     "contextBuildings": "Contextgebouwen",
     "designBuildings": "Ontwerpgebouwen",
     "terrain": "Terrein",
-    "resetColors": "Kleuren opnieuw instellen"
+    "resetColors": "Kleuren opnieuw instellen",
+    "contextShadows": "Contextschaduwen",
+    "designShadows": "Ontwerpschaduwen"
   },
   "date": {
     "label": "Datum"

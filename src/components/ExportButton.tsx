@@ -3,6 +3,7 @@ import { saveAs } from "file-saver";
 import JSZip from "jszip";
 import { DateTime } from "luxon";
 import { useTranslation } from "../i18n/useTranslation";
+import { shadowOverlay } from "../shadowOverlay";
 
 type ExportButtonProps = {
   month: number;
@@ -55,7 +56,9 @@ export default function ExportButton(props: ExportButtonProps) {
         { zone: projectTimezone },
       );
       while (current.toMillis() <= endDate.toMillis()) {
-        await Forma.sun.setDate({ date: current.toJSDate() });
+        const date = current.toJSDate();
+        await Forma.sun.setDate({ date });
+        await shadowOverlay.refresh(date);
         const filename = `${current.toFormat("HH-mm")}.png`;
         const canvas = await Forma.camera.capture({ width, height });
         const data = canvas.toDataURL().split("base64,")[1];
@@ -72,6 +75,7 @@ export default function ExportButton(props: ExportButtonProps) {
       zipFolder.generateAsync({ type: "blob" }).then((content) => saveAs(content, folderName));
 
       await Forma.sun.setDate({ date: currentDate });
+      await shadowOverlay.refresh(currentDate);
     } catch (e) {
       console.log(e);
     }

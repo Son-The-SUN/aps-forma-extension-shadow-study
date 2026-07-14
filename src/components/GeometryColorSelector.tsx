@@ -2,11 +2,12 @@ import { Forma } from "forma-embedded-view-sdk/auto";
 import { useEffect, useMemo, useState } from "preact/hooks";
 import { FormaElement, Urn } from "forma-embedded-view-sdk/elements/types";
 import { useTranslation } from "../i18n/useTranslation";
-
-const GROUND_TEXTURE_NAME = "shadow-study";
+import { shadowOverlay } from "../shadowOverlay";
 
 const DEFAULT_CONTEXT_BUILDINGS_COLOR = "#cccccc";
 const DEFAULT_DESIGN_BUILDINGS_COLOR = "#ffffff";
+const DEFAULT_CONTEXT_SHADOWS_COLOR = "#4d4d4d";
+const DEFAULT_DESIGN_SHADOWS_COLOR = "#31437c";
 const DEFAULT_TERRAIN_COLOR = "#ffffff";
 
 type ElementGroups = {
@@ -62,30 +63,6 @@ function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): E
 function topLevelPaths(paths: string[]): string[] {
   const set = new Set(paths);
   return paths.filter((path) => !set.has(path.slice(0, path.lastIndexOf("/"))));
-}
-
-/**
- * Color the ground texture with a given color
- */
-async function colorGround(color: string) {
-  const bbox = await Forma.terrain.getBbox();
-  const canvas = document.createElement("canvas");
-  const width = bbox.max.x - bbox.min.x;
-  const height = bbox.max.y - bbox.min.y;
-  canvas.width = width;
-  canvas.height = height;
-  const context = canvas.getContext("2d");
-  if (!context) {
-    return;
-  }
-  context.fillStyle = color;
-  context.fillRect(0, 0, width, height);
-  return await Forma.terrain.groundTexture.add({
-    name: GROUND_TEXTURE_NAME,
-    canvas: canvas,
-    position: { x: 0, y: 0, z: 0 },
-    scale: { x: 1, y: 1 },
-  });
 }
 
 /**
@@ -146,10 +123,14 @@ export default function GeometryColorSelector() {
 
   const [shouldPaintContext, setShouldPaintContext] = useState(false);
   const [shouldPaintDesign, setShouldPaintDesign] = useState(false);
+  const [shouldPaintContextShadows, setShouldPaintContextShadows] = useState(false);
+  const [shouldPaintDesignShadows, setShouldPaintDesignShadows] = useState(false);
   const [shouldPaintTerrain, setShouldPaintTerrain] = useState(false);
 
   const [contextColor, setContextColor] = useState(DEFAULT_CONTEXT_BUILDINGS_COLOR);
   const [designColor, setDesignColor] = useState(DEFAULT_DESIGN_BUILDINGS_COLOR);
+  const [contextShadowsColor, setContextShadowsColor] = useState(DEFAULT_CONTEXT_SHADOWS_COLOR);
+  const [designShadowsColor, setDesignShadowsColor] = useState(DEFAULT_DESIGN_SHADOWS_COLOR);
   const [terrainColor, setTerrainColor] = useState(DEFAULT_TERRAIN_COLOR);
 
   const [elementGroups, setElementGroups] = useState<ElementGroups>({ context: [], design: [] });
@@ -157,6 +138,8 @@ export default function GeometryColorSelector() {
 
   const setContextColorDebounced = useMemo(() => debounce(setContextColor, 50), []);
   const setDesignColorDebounced = useMemo(() => debounce(setDesignColor, 50), []);
+  const setContextShadowsColorDebounced = useMemo(() => debounce(setContextShadowsColor, 50), []);
+  const setDesignShadowsColorDebounced = useMemo(() => debounce(setDesignShadowsColor, 50), []);
   const setTerrainColorDebounced = useMemo(() => debounce(setTerrainColor, 50), []);
 
   useEffect(() => {
@@ -228,19 +211,48 @@ export default function GeometryColorSelector() {
   }, [showDesign, elementGroups]);
 
   useEffect(() => {
-    if (shouldPaintTerrain) {
-      colorGround(terrainColor);
-    } else {
-      Forma.terrain.groundTexture.remove({ name: GROUND_TEXTURE_NAME });
+    if (elementGroups.context.length > 0 || elementGroups.design.length > 0) {
+      shadowOverlay.loadGeometry({
+        context: topLevelPaths(elementGroups.context),
+        design: topLevelPaths(elementGroups.design),
+      });
     }
-  }, [shouldPaintTerrain, terrainColor]);
+  }, [elementGroups]);
+
+  useEffect(() => {
+    shadowOverlay.setSettings({
+      // Hidden buildings should not cast shadows in the overlay either.
+      contextShadows: {
+        enabled: shouldPaintContextShadows && showContext,
+        color: contextShadowsColor,
+      },
+      designShadows: {
+        enabled: shouldPaintDesignShadows && showDesign,
+        color: designShadowsColor,
+      },
+      terrain: { enabled: shouldPaintTerrain, color: terrainColor },
+    });
+  }, [
+    shouldPaintContextShadows,
+    shouldPaintDesignShadows,
+    shouldPaintTerrain,
+    contextShadowsColor,
+    designShadowsColor,
+    terrainColor,
+    showContext,
+    showDesign,
+  ]);
 
   const onResetColors = () => {
     setShouldPaintContext(false);
     setShouldPaintDesign(false);
+    setShouldPaintContextShadows(false);
+    setShouldPaintDesignShadows(false);
     setShouldPaintTerrain(false);
     setContextColor(DEFAULT_CONTEXT_BUILDINGS_COLOR);
     setDesignColor(DEFAULT_DESIGN_BUILDINGS_COLOR);
+    setContextShadowsColor(DEFAULT_CONTEXT_SHADOWS_COLOR);
+    setDesignShadowsColor(DEFAULT_DESIGN_SHADOWS_COLOR);
     setTerrainColor(DEFAULT_TERRAIN_COLOR);
   };
 
@@ -260,6 +272,20 @@ export default function GeometryColorSelector() {
         setChecked={setShouldPaintDesign}
         color={designColor}
         setColor={setDesignColorDebounced}
+      />
+      <ColorRow
+        label={t("colorConfig.contextShadows")}
+        checked={shouldPaintContextShadows}
+        setChecked={setShouldPaintContextShadows}
+        color={contextShadowsColor}
+        setColor={setContextShadowsColorDebounced}
+      />
+      <ColorRow
+        label={t("colorConfig.designShadows")}
+        checked={shouldPaintDesignShadows}
+        setChecked={setShouldPaintDesignShadows}
+        color={designShadowsColor}
+        setColor={setDesignShadowsColorDebounced}
       />
       <ColorRow
         label={t("colorConfig.terrain")}

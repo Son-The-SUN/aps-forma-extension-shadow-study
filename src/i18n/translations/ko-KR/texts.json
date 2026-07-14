@@ -8,7 +8,9 @@
     "contextBuildings": "컨텍스트 건물",
     "designBuildings": "설계 건물",
     "terrain": "지형",
-    "resetColors": "색상 재설정"
+    "resetColors": "색상 재설정",
+    "contextShadows": "컨텍스트 그림자",
+    "designShadows": "설계 그림자"
   },
   "date": {
     "label": "날짜"

@@ -8,7 +8,9 @@
     "contextBuildings": "Edificios del contexto",
     "designBuildings": "Edificios del diseño",
     "terrain": "Terreno",
-    "resetColors": "Restablecer colores"
+    "resetColors": "Restablecer colores",
+    "contextShadows": "Sombras del contexto",
+    "designShadows": "Sombras del diseño"
   },
   "date": {
     "label": "Fecha"

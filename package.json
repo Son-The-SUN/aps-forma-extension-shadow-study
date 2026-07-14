@@ -18,13 +18,15 @@
     "jszip": "3.10.1",
     "lodash": "^4.17.21",
     "luxon": "^3.4.4",
-    "preact": "^10.20.1"
+    "preact": "^10.20.1",
+    "suncalc": "^2.0.1"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.2",
     "@types/file-saver": "^2.0.7",
     "@types/lodash": "4.17.0",
     "@types/luxon": "^3.4.2",
+    "@types/suncalc": "^1.9.2",
     "prettier": "3.2.5",
     "typescript": "^5.4.3",
     "vite": "^5.2.7"

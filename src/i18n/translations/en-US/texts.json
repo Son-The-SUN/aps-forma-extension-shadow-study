@@ -8,7 +8,9 @@
     "contextBuildings": "Context buildings",
     "designBuildings": "Design buildings",
     "terrain": "Terrain",
-    "resetColors": "Reset colors"
+    "resetColors": "Reset colors",
+    "contextShadows": "Context shadows",
+    "designShadows": "Design shadows"
   },
   "date": {
     "label": "Date"

@@ -8,7 +8,9 @@
     "contextBuildings": "Okolní budovy",
     "designBuildings": "Navrhované budovy",
     "terrain": "Terén",
-    "resetColors": "Obnovit barvy"
+    "resetColors": "Obnovit barvy",
+    "contextShadows": "Stíny okolních budov",
+    "designShadows": "Stíny navrhovaných budov"
   },
   "date": {
     "label": "Datum"

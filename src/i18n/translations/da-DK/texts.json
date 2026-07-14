@@ -8,7 +8,9 @@
     "contextBuildings": "Kontekstbygninger",
     "designBuildings": "Designbygninger",
     "terrain": "Terræn",
-    "resetColors": "Nulstil farver"
+    "resetColors": "Nulstil farver",
+    "contextShadows": "Kontekstskygger",
+    "designShadows": "Designskygger"
   },
   "date": {
     "label": "Dato"

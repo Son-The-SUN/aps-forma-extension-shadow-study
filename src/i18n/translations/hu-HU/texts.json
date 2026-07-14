@@ -8,7 +8,9 @@
     "contextBuildings": "Környezeti épületek",
     "designBuildings": "Tervezett épületek",
     "terrain": "Terep",
-    "resetColors": "Színek visszaállítása"
+    "resetColors": "Színek visszaállítása",
+    "contextShadows": "Környezeti árnyékok",
+    "designShadows": "Tervezett árnyékok"
   },
   "date": {
     "label": "Dátum"

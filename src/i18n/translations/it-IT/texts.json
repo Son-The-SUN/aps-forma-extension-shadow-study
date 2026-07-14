@@ -8,7 +8,9 @@
     "contextBuildings": "Edifici di contesto",
     "designBuildings": "Edifici di progetto",
     "terrain": "Terreno",
-    "resetColors": "Reimposta colori"
+    "resetColors": "Reimposta colori",
+    "contextShadows": "Ombre del contesto",
+    "designShadows": "Ombre del progetto"
   },
   "date": {
     "label": "Data"

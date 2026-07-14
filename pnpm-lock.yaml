@@ -32,6 +32,9 @@ importers:
       preact:
         specifier: ^10.20.1
         version: 10.25.4
+      suncalc:
+        specifier: ^2.0.1
+        version: 2.0.1
     devDependencies:
       '@preact/preset-vite':
         specifier: ^2.8.2
@@ -45,6 +48,9 @@ importers:
       '@types/luxon':
         specifier: ^3.4.2
         version: 3.4.2
+      '@types/suncalc':
+        specifier: ^1.9.2
+        version: 1.9.2
       prettier:
         specifier: 3.2.5
         version: 3.2.5
@@ -465,6 +471,9 @@ packages:
   '@types/luxon@3.4.2':
     resolution: {integrity: sha512-TifLZlFudklWlMBfhubvgqTXRzLDI5pCbGa4P8a3wPyUQSW+1xQ5eDsreP9DWHX3tjq1ke96uYG/nwundroWcA==}
 
+  '@types/suncalc@1.9.2':
+    resolution: {integrity: sha512-ATAGBHHfA1TlE2tjfidLyTcysjoT2JHHEAmWRULh73SU9UTn++j5fqHEW16X6Y/2Li87jEQXzgu4R/OOdlDqzw==}
+
   babel-plugin-transform-hook-names@1.0.2:
     resolution: {integrity: sha512-5gafyjyyBTTdX/tQQ0hRgu4AhNHG/hqWi0ZZmg2xvs2FgRkJXzDNKBZCyoYqgFkovfDrgM8OoKg8karoUvWeCw==}
     peerDependencies:
@@ -689,6 +698,9 @@ packages:
 
   string_decoder@1.1.1:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
+
+  suncalc@2.0.1:
+    resolution: {integrity: sha512-wjujU+HpsP1TUvN3/9dFkVQQCsMZbk7PkdZsASRJR4jVPHCm9Qy0FVkFTqXfs70Ag2yheN7ZUavzCyOjhJDGxQ==}
 
   typescript@5.7.3:
     resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
@@ -1079,6 +1091,8 @@ snapshots:
 
   '@types/luxon@3.4.2': {}
 
+  '@types/suncalc@1.9.2': {}
+
   babel-plugin-transform-hook-names@1.0.2(@babel/core@7.26.0):
     dependencies:
       '@babel/core': 7.26.0
@@ -1310,6 +1324,8 @@ snapshots:
   string_decoder@1.1.1:
     dependencies:
       safe-buffer: 5.1.2
+
+  suncalc@2.0.1: {}
 
   typescript@5.7.3: {}
 

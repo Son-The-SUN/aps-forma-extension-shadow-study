@@ -1,6 +1,7 @@
 import { Forma } from "forma-embedded-view-sdk/auto";
 import { DateTime } from "luxon";
 import { useTranslation } from "../i18n/useTranslation";
+import { shadowOverlay } from "../shadowOverlay";
 
 function timeout(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -51,11 +52,14 @@ export default function PreviewButton(props: PreviewButtonProps) {
       );
 
       while (current.toMillis() <= end.toMillis()) {
-        await Forma.sun.setDate({ date: current.toJSDate() });
+        const date = current.toJSDate();
+        await Forma.sun.setDate({ date });
+        await shadowOverlay.refresh(date);
         current = current.plus({ minutes: interval });
         await timeout(500);
       }
       await Forma.sun.setDate({ date: originalDate });
+      await shadowOverlay.refresh(originalDate);
     } catch (e) {
       console.log(e);
     }
