@@ -34,7 +34,9 @@ function hexToRgba(hex: string, alpha: number): string {
  */
 class ShadowOverlay {
   private positions: Record<ShadowGroup, Float32Array[]> = { context: [], design: [] };
-  private bbox: { min: { x: number; y: number }; max: { x: number; y: number } } | undefined;
+  private bbox:
+    | { min: { x: number; y: number; z: number }; max: { x: number; y: number; z: number } }
+    | undefined;
   private latitude = 0;
   private longitude = 0;
   private groundElevation = 0;
@@ -70,8 +72,15 @@ class ShadowOverlay {
         "[shadow-study] project has no geolocation -- shadow overlay directions will be wrong",
       );
     }
-    const center = { x: (bbox.min.x + bbox.max.x) / 2, y: (bbox.min.y + bbox.max.y) / 2 };
-    this.groundElevation = await Forma.terrain.getElevationAt(center);
+    // Use the terrain bounding box for the ground plane elevation since it is
+    // guaranteed to be in the same coordinate frame as the element meshes.
+    this.groundElevation = (bbox.min.z + bbox.max.z) / 2;
+    console.debug(
+      `[shadow-study] terrain bbox x ${bbox.min.x.toFixed(0)}..${bbox.max.x.toFixed(0)}, ` +
+        `y ${bbox.min.y.toFixed(0)}..${bbox.max.y.toFixed(0)}, ` +
+        `z ${bbox.min.z.toFixed(1)}..${bbox.max.z.toFixed(1)} -> ` +
+        `ground plane at z ${this.groundElevation.toFixed(1)}`,
+    );
 
     for (const group of ["context", "design"] as ShadowGroup[]) {
       const meshes = await Promise.all(
@@ -199,22 +208,23 @@ class ShadowOverlay {
     }
 
     if (anyShadows) {
+      // suncalc v2 returns degrees: azimuth clockwise from north (0 = N,
+      // 90 = E), altitude above the horizon.
       const { azimuth, altitude } = getPosition(sunDate, this.latitude, this.longitude);
-      const shadowBearing = (((azimuth * 180) / Math.PI + 360) % 360).toFixed(1);
       console.debug(
         `[shadow-study] sun for ${sunDate.toISOString()}: ` +
-          `azimuth ${((azimuth * 180) / Math.PI).toFixed(1)}deg from south towards west, ` +
-          `altitude ${((altitude * 180) / Math.PI).toFixed(1)}deg, ` +
-          `shadow bearing ${shadowBearing}deg from north`,
+          `azimuth ${azimuth.toFixed(1)}deg from north, altitude ${altitude.toFixed(1)}deg, ` +
+          `shadow bearing ${((azimuth + 180) % 360).toFixed(1)}deg from north`,
       );
       // Only draw shadows while the sun is above the horizon.
-      if (altitude > 0.01) {
-        // suncalc azimuth is measured from south towards west; convert to a
-        // unit vector pointing towards the sun in the local east/north/up frame.
+      if (altitude > 0.5) {
+        const azimuthRad = (azimuth * Math.PI) / 180;
+        const altitudeRad = (altitude * Math.PI) / 180;
+        // Unit vector pointing towards the sun in the local east/north/up frame.
         const sun = {
-          x: -Math.sin(azimuth) * Math.cos(altitude),
-          y: -Math.cos(azimuth) * Math.cos(altitude),
-          z: Math.sin(altitude),
+          x: Math.sin(azimuthRad) * Math.cos(altitudeRad),
+          y: Math.cos(azimuthRad) * Math.cos(altitudeRad),
+          z: Math.sin(altitudeRad),
         };
         if (contextShadows.enabled) {
           this.drawGroupShadows(ctx, this.positions.context, sun, contextShadows.color);

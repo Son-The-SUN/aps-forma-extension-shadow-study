@@ -48,9 +48,6 @@ importers:
       '@types/luxon':
         specifier: ^3.4.2
         version: 3.4.2
-      '@types/suncalc':
-        specifier: ^1.9.2
-        version: 1.9.2
       prettier:
         specifier: 3.2.5
         version: 3.2.5
@@ -470,9 +467,6 @@ packages:
 
   '@types/luxon@3.4.2':
     resolution: {integrity: sha512-TifLZlFudklWlMBfhubvgqTXRzLDI5pCbGa4P8a3wPyUQSW+1xQ5eDsreP9DWHX3tjq1ke96uYG/nwundroWcA==}
-
-  '@types/suncalc@1.9.2':
-    resolution: {integrity: sha512-ATAGBHHfA1TlE2tjfidLyTcysjoT2JHHEAmWRULh73SU9UTn++j5fqHEW16X6Y/2Li87jEQXzgu4R/OOdlDqzw==}
 
   babel-plugin-transform-hook-names@1.0.2:
     resolution: {integrity: sha512-5gafyjyyBTTdX/tQQ0hRgu4AhNHG/hqWi0ZZmg2xvs2FgRkJXzDNKBZCyoYqgFkovfDrgM8OoKg8karoUvWeCw==}
@@ -1090,8 +1084,6 @@ snapshots:
   '@types/lodash@4.17.0': {}
 
   '@types/luxon@3.4.2': {}
-
-  '@types/suncalc@1.9.2': {}
 
   babel-plugin-transform-hook-names@1.0.2(@babel/core@7.26.0):
     dependencies:

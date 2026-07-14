@@ -26,7 +26,6 @@
     "@types/file-saver": "^2.0.7",
     "@types/lodash": "4.17.0",
     "@types/luxon": "^3.4.2",
-    "@types/suncalc": "^1.9.2",
     "prettier": "3.2.5",
     "typescript": "^5.4.3",
     "vite": "^5.2.7"
