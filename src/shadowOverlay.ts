@@ -20,26 +20,35 @@ function hexToRgba(hex: string, alpha: number): string {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
+type CasterFootprint = { x: number; y: number; minZ: number };
+
+type CasterMesh = {
+  positions: Float32Array;
+  /** Elevation of the ground plane this mesh's shadow is projected onto. */
+  groundZ: number;
+};
+
 /**
  * Renders shadows cast by buildings as a colored ground texture overlay,
  * so shadows from context and design buildings can be told apart.
  *
  * Shadows are computed by projecting each building triangle along the sun
- * direction onto a horizontal ground plane and rasterizing the projected
- * triangles into a canvas which is draped over the terrain. The sun position
- * is derived from the scene date and the project geolocation using suncalc.
+ * direction onto a horizontal ground plane at the terrain elevation of the
+ * building's footprint, and rasterizing the projected triangles into a canvas
+ * which is draped over the terrain. The sun position is derived from the
+ * scene date and the project geolocation using suncalc.
  *
- * Limitation: the projection uses a single ground plane at the elevation of
- * the terrain center, so shadow positions drift on strongly sloped sites.
+ * Limitation: each mesh is projected onto a single ground plane, so shadows
+ * can still drift where the terrain elevation changes a lot along the shadow
+ * (steep slopes, or merged context meshes spanning uneven ground).
  */
 class ShadowOverlay {
-  private positions: Record<ShadowGroup, Float32Array[]> = { context: [], design: [] };
+  private casters: Record<ShadowGroup, CasterMesh[]> = { context: [], design: [] };
   private bbox:
     | { min: { x: number; y: number; z: number }; max: { x: number; y: number; z: number } }
     | undefined;
   private latitude = 0;
   private longitude = 0;
-  private groundElevation = 0;
   private hasGeometry = false;
 
   private settings: ShadowOverlaySettings = {
@@ -72,23 +81,27 @@ class ShadowOverlay {
         "[shadow-study] project has no geolocation -- shadow overlay directions will be wrong",
       );
     }
-    // Use the terrain bounding box for the ground plane elevation since it is
-    // guaranteed to be in the same coordinate frame as the element meshes.
-    this.groundElevation = (bbox.min.z + bbox.max.z) / 2;
     console.debug(
       `[shadow-study] terrain bbox x ${bbox.min.x.toFixed(0)}..${bbox.max.x.toFixed(0)}, ` +
         `y ${bbox.min.y.toFixed(0)}..${bbox.max.y.toFixed(0)}, ` +
-        `z ${bbox.min.z.toFixed(1)}..${bbox.max.z.toFixed(1)} -> ` +
-        `ground plane at z ${this.groundElevation.toFixed(1)}`,
+        `z ${bbox.min.z.toFixed(1)}..${bbox.max.z.toFixed(1)}`,
     );
 
     for (const group of ["context", "design"] as ShadowGroup[]) {
       const meshes = await Promise.all(
         groupPaths[group].map((path) => Forma.geometry.getTriangles({ path })),
       );
-      this.positions[group] = meshes.filter((mesh, index) =>
-        this.isShadowCaster(mesh, group, groupPaths[group][index]),
-      );
+      const casters: CasterMesh[] = [];
+      for (let index = 0; index < meshes.length; index++) {
+        const footprint = this.casterFootprint(meshes[index], group, groupPaths[group][index]);
+        if (footprint != null) {
+          casters.push({
+            positions: meshes[index],
+            groundZ: await this.groundElevationFor(footprint),
+          });
+        }
+      }
+      this.casters[group] = casters;
     }
 
     this.hasGeometry = true;
@@ -98,14 +111,18 @@ class ShadowOverlay {
   }
 
   /**
-   * Keep only meshes that can cast a meaningful shadow, filtering out flat
-   * overlays (roads, zones, site limits) which have no height. Near-ground
-   * geometry such as terrain is additionally filtered per triangle when
-   * drawing.
+   * Decide whether a mesh can cast a meaningful shadow, filtering out flat
+   * overlays (roads, zones, site limits) which have no height. For casters,
+   * returns the footprint center and base elevation used to pick the ground
+   * plane their shadow is projected onto.
    */
-  private isShadowCaster(mesh: Float32Array, group: ShadowGroup, path: string): boolean {
+  private casterFootprint(
+    mesh: Float32Array,
+    group: ShadowGroup,
+    path: string,
+  ): CasterFootprint | null {
     if (mesh.length < 9) {
-      return false;
+      return null;
     }
     let minX = Infinity;
     let maxX = -Infinity;
@@ -129,7 +146,38 @@ class ShadowOverlay {
         `z ${minZ.toFixed(1)}..${maxZ.toFixed(1)}m, ` +
         `${mesh.length / 9} triangles -> ${keep ? "kept" : "skipped (flat)"}`,
     );
-    return keep;
+    return keep ? { x: (minX + maxX) / 2, y: (minY + maxY) / 2, minZ } : null;
+  }
+
+  /**
+   * Ground plane elevation for a caster: the terrain elevation at its
+   * footprint center, so the shadow stays attached to the building base the
+   * same way Forma's own shadows are. Falls back to the mesh base elevation
+   * if the terrain query fails or disagrees with the mesh coordinate frame.
+   */
+  private async groundElevationFor(footprint: CasterFootprint): Promise<number> {
+    if (this.bbox != null) {
+      try {
+        const elevation = await Forma.terrain.getElevationAt({ x: footprint.x, y: footprint.y });
+        // Terrain elevations live inside the terrain bbox z range; a value
+        // outside it means the query did not resolve in the mesh coordinate
+        // frame and cannot be trusted.
+        if (elevation >= this.bbox.min.z - 1 && elevation <= this.bbox.max.z + 1) {
+          console.debug(
+            `[shadow-study] ground plane at (${footprint.x.toFixed(0)}, ${footprint.y.toFixed(0)}): ` +
+              `terrain z ${elevation.toFixed(1)}, mesh base z ${footprint.minZ.toFixed(1)}`,
+          );
+          return elevation;
+        }
+        console.warn(
+          `[shadow-study] terrain elevation ${elevation.toFixed(1)} is outside the terrain bbox ` +
+            `z range -- using mesh base z ${footprint.minZ.toFixed(1)} instead`,
+        );
+      } catch (error) {
+        console.warn("[shadow-study] getElevationAt failed -- using mesh base elevation", error);
+      }
+    }
+    return footprint.minZ;
   }
 
   setSettings(settings: ShadowOverlaySettings): void {
@@ -227,10 +275,10 @@ class ShadowOverlay {
           z: Math.sin(altitudeRad),
         };
         if (contextShadows.enabled) {
-          this.drawGroupShadows(ctx, this.positions.context, sun, contextShadows.color);
+          this.drawGroupShadows(ctx, this.casters.context, sun, contextShadows.color);
         }
         if (designShadows.enabled) {
-          this.drawGroupShadows(ctx, this.positions.design, sun, designShadows.color);
+          this.drawGroupShadows(ctx, this.casters.design, sun, designShadows.color);
         }
       }
     }
@@ -251,13 +299,13 @@ class ShadowOverlay {
   }
 
   /**
-   * Project every triangle of a group onto the ground plane and fill the
-   * union of the projected triangles in one pass, so overlapping shadow
+   * Project every triangle of a group onto its mesh's ground plane and fill
+   * the union of the projected triangles in one pass, so overlapping shadow
    * triangles keep a uniform opacity.
    */
   private drawGroupShadows(
     ctx: CanvasRenderingContext2D,
-    meshes: Float32Array[],
+    casters: CasterMesh[],
     sun: { x: number; y: number; z: number },
     color: string,
   ): void {
@@ -265,19 +313,20 @@ class ShadowOverlay {
       return;
     }
     const { min, max } = this.bbox;
-    const z0 = this.groundElevation;
 
     ctx.fillStyle = hexToRgba(color, SHADOW_ALPHA);
     ctx.beginPath();
 
     const projected = new Float64Array(6);
-    for (const positions of meshes) {
+    for (const { positions, groundZ } of casters) {
       for (let i = 0; i + 8 < positions.length; i += 9) {
         for (let v = 0; v < 3; v++) {
           const x = positions[i + v * 3];
           const y = positions[i + v * 3 + 1];
           const z = positions[i + v * 3 + 2];
-          const t = (z - z0) / sun.z;
+          // Clamp so geometry below the ground plane projects to its own
+          // footprint instead of poking out on the sun side.
+          const t = Math.max(z - groundZ, 0) / sun.z;
           // Canvas rows go from north (top) to south, so flip the y axis.
           projected[v * 2] = x - t * sun.x - min.x;
           projected[v * 2 + 1] = max.y - (y - t * sun.y);
