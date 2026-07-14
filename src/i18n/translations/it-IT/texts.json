@@ -3,6 +3,13 @@
     "exportImages": "Esportazione di immagini",
     "preview": "Anteprima"
   },
+  "colorConfig": {
+    "title": "Configurazioni dei colori",
+    "contextBuildings": "Edifici di contesto",
+    "designBuildings": "Edifici di progetto",
+    "terrain": "Terreno",
+    "resetColors": "Reimposta colori"
+  },
   "date": {
     "label": "Data"
   },
@@ -16,10 +23,6 @@
     "every30min": "Ogni 30 minuti",
     "everyHour": "Ogni ora",
     "label": "Frequenza"
-  },
-  "geometry": {
-    "colorGeometry": "Geometria colore",
-    "colorTerrain": "Colora terreno"
   },
   "header": {
     "title": "Studio delle ombre"

@@ -3,6 +3,13 @@
     "exportImages": "Képek exportálása",
     "preview": "Előnézet"
   },
+  "colorConfig": {
+    "title": "Színbeállítások",
+    "contextBuildings": "Környezeti épületek",
+    "designBuildings": "Tervezett épületek",
+    "terrain": "Terep",
+    "resetColors": "Színek visszaállítása"
+  },
   "date": {
     "label": "Dátum"
   },
@@ -16,10 +23,6 @@
     "every30min": "Minden 30. percben",
     "everyHour": "Minden órában",
     "label": "Frequency"
-  },
-  "geometry": {
-    "colorGeometry": "Színes geometria",
-    "colorTerrain": "Szín terep"
   },
   "header": {
     "title": "Árnyékvizsgálat"

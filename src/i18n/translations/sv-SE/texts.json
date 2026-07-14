@@ -3,6 +3,13 @@
     "exportImages": "Exportera bilder",
     "preview": "Förhandsgranskning"
   },
+  "colorConfig": {
+    "title": "Färgkonfigurationer",
+    "contextBuildings": "Kontextbyggnader",
+    "designBuildings": "Designbyggnader",
+    "terrain": "Terräng",
+    "resetColors": "Återställ färger"
+  },
   "date": {
     "label": "Datum"
   },
@@ -16,10 +23,6 @@
     "every30min": "Var 30:e minut",
     "everyHour": "Varje timme",
     "label": "Frekvens"
-  },
-  "geometry": {
-    "colorGeometry": "Färg geometri",
-    "colorTerrain": "Färg terräng"
   },
   "header": {
     "title": "Skuggstudie"

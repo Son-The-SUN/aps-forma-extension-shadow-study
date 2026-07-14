@@ -3,6 +3,13 @@
     "exportImages": "匯出影像",
     "preview": "預覽"
   },
+  "colorConfig": {
+    "title": "顏色配置",
+    "contextBuildings": "周邊建築",
+    "designBuildings": "設計建築",
+    "terrain": "地形",
+    "resetColors": "重設顏色"
+  },
   "date": {
     "label": "日期"
   },
@@ -16,10 +23,6 @@
     "every30min": "每 30 分鐘一班",
     "everyHour": "每小時",
     "label": "頻率"
-  },
-  "geometry": {
-    "colorGeometry": "顏色幾何圖形",
-    "colorTerrain": "顏色 地形"
   },
   "header": {
     "title": "陰影研究"

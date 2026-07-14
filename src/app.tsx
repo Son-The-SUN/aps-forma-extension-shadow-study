@@ -34,8 +34,8 @@ export default function App() {
         setEndMinute={setEndMinute}
       />
       <IntervalSelector interval={interval} setInterval={setInterval} />
-      <ResolutionSelector resolution={resolution} setResolution={setResolution} />
       <GeometryColorSelector />
+      <ResolutionSelector resolution={resolution} setResolution={setResolution} />
       <PreviewButton
         month={month}
         day={day}

@@ -3,6 +3,13 @@
     "exportImages": "Afbeeldingen exporteren",
     "preview": "Voorbeeld"
   },
+  "colorConfig": {
+    "title": "Kleurconfiguraties",
+    "contextBuildings": "Contextgebouwen",
+    "designBuildings": "Ontwerpgebouwen",
+    "terrain": "Terrein",
+    "resetColors": "Kleuren opnieuw instellen"
+  },
   "date": {
     "label": "Datum"
   },
@@ -16,10 +23,6 @@
     "every30min": "Elke 30e minuut",
     "everyHour": "Elk uur",
     "label": "Frequentie"
-  },
-  "geometry": {
-    "colorGeometry": "Kleur geometrie",
-    "colorTerrain": "Kleur terrein"
   },
   "header": {
     "title": "Schaduwonderzoek"

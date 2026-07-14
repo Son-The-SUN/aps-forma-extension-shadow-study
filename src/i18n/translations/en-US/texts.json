@@ -3,6 +3,13 @@
     "exportImages": "Export images",
     "preview": "Preview"
   },
+  "colorConfig": {
+    "title": "Color configurations",
+    "contextBuildings": "Context buildings",
+    "designBuildings": "Design buildings",
+    "terrain": "Terrain",
+    "resetColors": "Reset colors"
+  },
   "date": {
     "label": "Date"
   },
@@ -16,10 +23,6 @@
     "every30min": "Every 30th minute",
     "everyHour": "Every hour",
     "label": "Frequency"
-  },
-  "geometry": {
-    "colorGeometry": "Color geometry",
-    "colorTerrain": "Color terrain"
   },
   "header": {
     "title": "Shadow study"

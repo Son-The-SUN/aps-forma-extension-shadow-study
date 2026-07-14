@@ -3,6 +3,13 @@
     "exportImages": "Exporter des images",
     "preview": "Aperçu"
   },
+  "colorConfig": {
+    "title": "Configurations de couleurs",
+    "contextBuildings": "Bâtiments contextuels",
+    "designBuildings": "Bâtiments de conception",
+    "terrain": "Terrain",
+    "resetColors": "Réinitialiser les couleurs"
+  },
   "date": {
     "label": "Date"
   },
@@ -16,10 +23,6 @@
     "every30min": "Toutes les 30 minutes",
     "everyHour": "Toutes les heures",
     "label": "Fréquence"
-  },
-  "geometry": {
-    "colorGeometry": "Géométrie des couleurs",
-    "colorTerrain": "Couleur du terrain"
   },
   "header": {
     "title": "Étude d’ombrage"

@@ -3,6 +3,13 @@
     "exportImages": "Export obrázků",
     "preview": "Náhled"
   },
+  "colorConfig": {
+    "title": "Konfigurace barev",
+    "contextBuildings": "Okolní budovy",
+    "designBuildings": "Navrhované budovy",
+    "terrain": "Terén",
+    "resetColors": "Obnovit barvy"
+  },
   "date": {
     "label": "Datum"
   },
@@ -16,10 +23,6 @@
     "every30min": "Každých 30 minut",
     "everyHour": "Každou hodinu",
     "label": "Frekvence"
-  },
-  "geometry": {
-    "colorGeometry": "Barevná geometrie",
-    "colorTerrain": "Barevný terén"
   },
   "header": {
     "title": "Studie zastínění"

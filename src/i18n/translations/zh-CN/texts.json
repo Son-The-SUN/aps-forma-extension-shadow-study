@@ -3,6 +3,13 @@
     "exportImages": "导出图像",
     "preview": "预览"
   },
+  "colorConfig": {
+    "title": "颜色配置",
+    "contextBuildings": "周边建筑",
+    "designBuildings": "设计建筑",
+    "terrain": "地形",
+    "resetColors": "重置颜色"
+  },
   "date": {
     "label": "日期"
   },
@@ -16,10 +23,6 @@
     "every30min": "每 30 分钟",
     "everyHour": "每小时",
     "label": "步长"
-  },
-  "geometry": {
-    "colorGeometry": "彩色几何体（Color geometry）",
-    "colorTerrain": "彩色地形"
   },
   "header": {
     "title": "阴影分析"

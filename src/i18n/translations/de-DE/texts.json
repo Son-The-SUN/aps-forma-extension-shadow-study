@@ -3,6 +3,13 @@
     "exportImages": "Exportieren von Bildern",
     "preview": "Vorschau"
   },
+  "colorConfig": {
+    "title": "Farbkonfigurationen",
+    "contextBuildings": "Kontextgebäude",
+    "designBuildings": "Entwurfsgebäude",
+    "terrain": "Gelände",
+    "resetColors": "Farben zurücksetzen"
+  },
   "date": {
     "label": "Datum"
   },
@@ -16,10 +23,6 @@
     "every30min": "Jede 30. Minute",
     "everyHour": "Jede Stunde",
     "label": "Frequenz"
-  },
-  "geometry": {
-    "colorGeometry": "Geometrie einfärben",
-    "colorTerrain": "Gelände einfärben"
   },
   "header": {
     "title": "Schattenstudie"

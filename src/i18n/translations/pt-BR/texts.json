@@ -3,6 +3,13 @@
     "exportImages": "Exportar imagens",
     "preview": "Visualização"
   },
+  "colorConfig": {
+    "title": "Configurações de cores",
+    "contextBuildings": "Edifícios de contexto",
+    "designBuildings": "Edifícios de projeto",
+    "terrain": "Terreno",
+    "resetColors": "Redefinir cores"
+  },
   "date": {
     "label": "Data"
   },
@@ -16,10 +23,6 @@
     "every30min": "A cada 30 minutos",
     "everyHour": "A cada hora",
     "label": "Frequência"
-  },
-  "geometry": {
-    "colorGeometry": "Geometria da cor",
-    "colorTerrain": "Cor do topografia"
   },
   "header": {
     "title": "Estudo das sombras"

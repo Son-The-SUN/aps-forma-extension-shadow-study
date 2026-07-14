@@ -3,6 +3,13 @@
     "exportImages": "이미지 내보내기",
     "preview": "미리보기"
   },
+  "colorConfig": {
+    "title": "색상 구성",
+    "contextBuildings": "컨텍스트 건물",
+    "designBuildings": "설계 건물",
+    "terrain": "지형",
+    "resetColors": "색상 재설정"
+  },
   "date": {
     "label": "날짜"
   },
@@ -16,10 +23,6 @@
     "every30min": "30분마다",
     "everyHour": "매시간",
     "label": "빈도"
-  },
-  "geometry": {
-    "colorGeometry": "색상 형상",
-    "colorTerrain": "색상 지형"
   },
   "header": {
     "title": "그림자 연구"

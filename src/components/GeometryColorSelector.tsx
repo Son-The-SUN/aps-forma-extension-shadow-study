@@ -1,37 +1,57 @@
 import { Forma } from "forma-embedded-view-sdk/auto";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { FormaElement, Urn } from "forma-embedded-view-sdk/elements/types";
 import { useTranslation } from "../i18n/useTranslation";
 
+const GROUND_TEXTURE_NAME = "shadow-study";
+
+const DEFAULT_CONTEXT_BUILDINGS_COLOR = "#cccccc";
+const DEFAULT_DESIGN_BUILDINGS_COLOR = "#ffffff";
+const DEFAULT_TERRAIN_COLOR = "#ffffff";
+
+type ElementGroups = {
+  context: string[];
+  design: string[];
+};
+
 /**
- *
- * @param urn The root urn of the element hierarchy to search
- * @param elements Record that must contain all elements part of the hierarchy
- * @param filterPredicate Predicate to filter the elements you want to get the paths for
- * @param path Pased recursively to build the path of the elements. Should be "root" when calling the function on a proposal URN.
- * @returns a list of paths to the elements that match the filterPredicate
+ * Element URNs follow the scheme `urn:adsk-forma-elements:{system}:{authcontext}:{id}:{revision}`.
  */
-function getPathOfElements(
-  urn: Urn,
-  elements: Record<Urn, FormaElement>,
-  filterPredicate: (element: FormaElement) => boolean,
-  path: string = "root",
-): string[] {
-  const element = elements[urn];
-  const paths = [];
-  if (filterPredicate(element)) {
-    paths.push(path);
-  }
+function getElementSystem(urn: Urn): string {
+  return urn.split(":")[2];
+}
 
-  if (element.children) {
-    for (const child of element?.children) {
-      paths.push(
-        ...getPathOfElements(child.urn, elements, filterPredicate, `${path}/${child.key}`),
-      );
+function isTerrainElement(urn: Urn, element: FormaElement): boolean {
+  return element.properties?.category === "terrain" || getElementSystem(urn) === "terrain";
+}
+
+/**
+ * Group the paths of all elements in the hierarchy into context elements
+ * (imported surroundings from the integrate element system) and design
+ * elements (everything else). Terrain elements are excluded since the
+ * terrain is colored through the ground texture instead.
+ */
+function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): ElementGroups {
+  const groups: ElementGroups = { context: [], design: [] };
+
+  const walk = (urn: Urn, path: string, inContext: boolean) => {
+    const element = elements[urn];
+    if (element == null || isTerrainElement(urn, element)) {
+      return;
     }
-  }
 
-  return paths;
+    const isContext = inContext || getElementSystem(urn) === "integrate";
+    if (path !== "root") {
+      (isContext ? groups.context : groups.design).push(path);
+    }
+
+    for (const child of element.children ?? []) {
+      walk(child.urn, `${path}/${child.key}`, isContext);
+    }
+  };
+
+  walk(rootUrn, "root", false);
+  return groups;
 }
 
 /**
@@ -51,23 +71,11 @@ async function colorGround(color: string) {
   context.fillStyle = color;
   context.fillRect(0, 0, width, height);
   return await Forma.terrain.groundTexture.add({
-    name: "shadow-study",
+    name: GROUND_TEXTURE_NAME,
     canvas: canvas,
     position: { x: 0, y: 0, z: 0 },
     scale: { x: 1, y: 1 },
   });
-}
-
-/**
- * Color elements with a given color
- */
-function colorPaths(elementPaths: string[], color: string) {
-  const pathsToColor = new Map<string, string>();
-  for (const path of elementPaths) {
-    pathsToColor.set(path, color);
-  }
-
-  Forma.render.elementColors.set({ pathsToColor });
 }
 
 /**
@@ -87,15 +95,56 @@ export const debounce = <F extends (...args: any[]) => ReturnType<F>>(func: F, w
     });
 };
 
+type ColorRowProps = {
+  label: string;
+  checked: boolean;
+  setChecked: (checked: boolean) => void;
+  color: string;
+  setColor: (color: string) => void;
+};
+
+function ColorRow({ label, checked, setChecked, color, setColor }: ColorRowProps) {
+  return (
+    <div class="row">
+      <div class="row-title" style={{ width: "60%" }}>
+        <weave-checkbox
+          checked={checked}
+          label={label}
+          showlabel
+          onChange={(e) => setChecked(e.detail.checked)}
+        ></weave-checkbox>
+      </div>
+      <div class="row-item">
+        <input
+          type="color"
+          class={"color-picker"}
+          value={color}
+          onInput={(e) => {
+            if (e.target instanceof HTMLInputElement) setColor(e.target.value);
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function GeometryColorSelector() {
   const { t } = useTranslation();
-  const [shouldPaintGeometry, setShouldPaintGeometry] = useState(false);
+
+  const [shouldPaintContext, setShouldPaintContext] = useState(false);
+  const [shouldPaintDesign, setShouldPaintDesign] = useState(false);
   const [shouldPaintTerrain, setShouldPaintTerrain] = useState(false);
 
-  const [elementPaths, setElementPaths] = useState<string[]>([]);
+  const [contextColor, setContextColor] = useState(DEFAULT_CONTEXT_BUILDINGS_COLOR);
+  const [designColor, setDesignColor] = useState(DEFAULT_DESIGN_BUILDINGS_COLOR);
+  const [terrainColor, setTerrainColor] = useState(DEFAULT_TERRAIN_COLOR);
+
+  const [elementGroups, setElementGroups] = useState<ElementGroups>({ context: [], design: [] });
   const [rootUrn, setRootUrn] = useState<Urn | undefined>();
-  const [geometryColor, setGeometryColor] = useState("#ffffff");
-  const [terrainColor, setTerrainColor] = useState("#ffffff");
+
+  const setContextColorDebounced = useMemo(() => debounce(setContextColor, 50), []);
+  const setDesignColorDebounced = useMemo(() => debounce(setDesignColor, 50), []);
+  const setTerrainColorDebounced = useMemo(() => debounce(setTerrainColor, 50), []);
 
   useEffect(() => {
     Forma.proposal.getRootUrn().then((rootUrn) => {
@@ -112,68 +161,84 @@ export default function GeometryColorSelector() {
   useEffect(() => {
     if (rootUrn != null) {
       Forma.elements.get({ urn: rootUrn as Urn, recursive: true }).then(({ elements }) => {
-        const paths = getPathOfElements(rootUrn as Urn, elements, () => true);
-        setElementPaths(paths);
+        setElementGroups(groupElementPaths(rootUrn as Urn, elements));
       });
     }
   }, [rootUrn]);
 
   useEffect(() => {
-    if (shouldPaintTerrain && shouldPaintGeometry) {
-      colorGround(terrainColor).then(() => {
-        colorPaths(elementPaths, geometryColor);
-      });
-    } else if (shouldPaintTerrain) {
-      colorGround(terrainColor);
-      Forma.render.elementColors.clearAll();
-    } else if (shouldPaintGeometry) {
-      colorPaths(elementPaths, geometryColor);
-      Forma.terrain.groundTexture.remove({ name: "shadow-study" });
-    } else {
-      Forma.render.elementColors.clearAll();
-      Forma.terrain.groundTexture.remove({ name: "shadow-study" });
+    const pathsToColor = new Map<string, string>();
+    if (shouldPaintContext) {
+      for (const path of elementGroups.context) {
+        pathsToColor.set(path, contextColor);
+      }
     }
-  }, [shouldPaintTerrain, shouldPaintGeometry, geometryColor, elementPaths, terrainColor]);
+    if (shouldPaintDesign) {
+      for (const path of elementGroups.design) {
+        pathsToColor.set(path, designColor);
+      }
+    }
+
+    if (pathsToColor.size === 0) {
+      Forma.render.elementColors.clearAll();
+      return;
+    }
+
+    const pathsToClear = [
+      ...(shouldPaintContext ? [] : elementGroups.context),
+      ...(shouldPaintDesign ? [] : elementGroups.design),
+    ];
+    if (pathsToClear.length > 0) {
+      Forma.render.elementColors.clear({ paths: pathsToClear });
+    }
+    Forma.render.elementColors.set({ pathsToColor });
+  }, [shouldPaintContext, shouldPaintDesign, contextColor, designColor, elementGroups]);
+
+  useEffect(() => {
+    if (shouldPaintTerrain) {
+      colorGround(terrainColor);
+    } else {
+      Forma.terrain.groundTexture.remove({ name: GROUND_TEXTURE_NAME });
+    }
+  }, [shouldPaintTerrain, terrainColor]);
+
+  const onResetColors = () => {
+    setShouldPaintContext(false);
+    setShouldPaintDesign(false);
+    setShouldPaintTerrain(false);
+    setContextColor(DEFAULT_CONTEXT_BUILDINGS_COLOR);
+    setDesignColor(DEFAULT_DESIGN_BUILDINGS_COLOR);
+    setTerrainColor(DEFAULT_TERRAIN_COLOR);
+  };
 
   return (
     <>
+      <div class="section-title">{t("colorConfig.title")}</div>
+      <ColorRow
+        label={t("colorConfig.contextBuildings")}
+        checked={shouldPaintContext}
+        setChecked={setShouldPaintContext}
+        color={contextColor}
+        setColor={setContextColorDebounced}
+      />
+      <ColorRow
+        label={t("colorConfig.designBuildings")}
+        checked={shouldPaintDesign}
+        setChecked={setShouldPaintDesign}
+        color={designColor}
+        setColor={setDesignColorDebounced}
+      />
+      <ColorRow
+        label={t("colorConfig.terrain")}
+        checked={shouldPaintTerrain}
+        setChecked={setShouldPaintTerrain}
+        color={terrainColor}
+        setColor={setTerrainColorDebounced}
+      />
       <div class="row">
-        <div class="row-title" style={{ width: "50%" }}>
-          {t("geometry.colorGeometry")}:
-        </div>
-        <div class="row-item">
-          <weave-checkbox
-            checked={shouldPaintGeometry}
-            onChange={(e) => setShouldPaintGeometry(e.detail.checked)}
-          ></weave-checkbox>
-          <input
-            type="color"
-            class={"color-picker"}
-            value={geometryColor}
-            onInput={debounce((e: Event) => {
-              if (e.target instanceof HTMLInputElement) setGeometryColor(e.target?.value);
-            }, 50)}
-          />
-        </div>
-      </div>
-      <div class="row">
-        <div class="row-title" style={{ width: "50%" }}>
-          {t("geometry.colorTerrain")}:
-        </div>
-        <div class="row-item">
-          <weave-checkbox
-            checked={shouldPaintTerrain}
-            onChange={(e) => setShouldPaintTerrain(e.detail.checked)}
-          ></weave-checkbox>
-          <input
-            type="color"
-            class={"color-picker"}
-            value={terrainColor}
-            onInput={debounce((e: Event) => {
-              if (e.target instanceof HTMLInputElement) setTerrainColor(e.target?.value);
-            }, 50)}
-          />
-        </div>
+        <weave-button variant="flat" onClick={onResetColors}>
+          {t("colorConfig.resetColors")}
+        </weave-button>
       </div>
     </>
   );

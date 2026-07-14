@@ -3,6 +3,13 @@
     "exportImages": "イメージのエクスポート",
     "preview": "プレビュー"
   },
+  "colorConfig": {
+    "title": "色の設定",
+    "contextBuildings": "コンテキストの建物",
+    "designBuildings": "設計の建物",
+    "terrain": "地形",
+    "resetColors": "色をリセット"
+  },
   "date": {
     "label": "日付"
   },
@@ -16,10 +23,6 @@
     "every30min": "30 分ごと",
     "everyHour": "1 時間ごと",
     "label": "周期"
-  },
-  "geometry": {
-    "colorGeometry": "カラー ジオメトリ",
-    "colorTerrain": "カラー地形"
   },
   "header": {
     "title": "影シミュレーション"

@@ -59,6 +59,16 @@ weave-select {
   color: #3c3c3cb2;
 }
 
+.section-title {
+  display: flex;
+  align-items: center;
+
+  height: 36px;
+
+  font-weight: 600;
+  font-size: 11px;
+}
+
 .color-picker {
   margin-left: 10px;
   width: 40%;

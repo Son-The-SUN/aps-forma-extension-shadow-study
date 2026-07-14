@@ -3,6 +3,13 @@
     "exportImages": "Eksportowanie obrazów",
     "preview": "Podgląd"
   },
+  "colorConfig": {
+    "title": "Konfiguracje kolorów",
+    "contextBuildings": "Budynki kontekstu",
+    "designBuildings": "Budynki projektu",
+    "terrain": "Teren",
+    "resetColors": "Resetuj kolory"
+  },
   "date": {
     "label": "Data"
   },
@@ -16,10 +23,6 @@
     "every30min": "Co 30 minut",
     "everyHour": "Co godzinę",
     "label": "Częstotliwość"
-  },
-  "geometry": {
-    "colorGeometry": "Koloruj geometrię",
-    "colorTerrain": "Kolor terenu"
   },
   "header": {
     "title": "Badanie cieni"

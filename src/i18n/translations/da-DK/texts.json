@@ -3,6 +3,13 @@
     "exportImages": "Eksport af billeder",
     "preview": "Forhåndsvis"
   },
+  "colorConfig": {
+    "title": "Farvekonfigurationer",
+    "contextBuildings": "Kontekstbygninger",
+    "designBuildings": "Designbygninger",
+    "terrain": "Terræn",
+    "resetColors": "Nulstil farver"
+  },
   "date": {
     "label": "Dato"
   },
@@ -16,10 +23,6 @@
     "every30min": "Hvert 30. minut",
     "everyHour": "Hver time",
     "label": "Frekvens"
-  },
-  "geometry": {
-    "colorGeometry": "Farvegeometri",
-    "colorTerrain": "Farve terræn"
   },
   "header": {
     "title": "Skyggeundersøgelse"

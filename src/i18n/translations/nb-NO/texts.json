@@ -3,6 +3,13 @@
     "exportImages": "Eksporter bilder",
     "preview": "Forhåndsvisning"
   },
+  "colorConfig": {
+    "title": "Fargekonfigurasjoner",
+    "contextBuildings": "Kontekstbygninger",
+    "designBuildings": "Designbygninger",
+    "terrain": "Terreng",
+    "resetColors": "Tilbakestill farger"
+  },
   "date": {
     "label": "Dato"
   },
@@ -16,10 +23,6 @@
     "every30min": "Hvert 30. minutt",
     "everyHour": "Hver time",
     "label": "Frekvens"
-  },
-  "geometry": {
-    "colorGeometry": "Fargegeometri",
-    "colorTerrain": "Fargeterreng"
   },
   "header": {
     "title": "Skyggestudie"
