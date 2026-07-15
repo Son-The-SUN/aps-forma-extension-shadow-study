@@ -27,18 +27,27 @@ function isTerrainElement(urn: Urn, element: FormaElement): boolean {
   return element.properties?.category === "terrain" || getElementSystem(urn) === "terrain";
 }
 
+function isBaseElement(urn: Urn): boolean {
+  return getElementSystem(urn) === "base";
+}
+
 /**
- * Group the paths of all elements in the hierarchy into design elements
- * (imported through the integrate element system, e.g. uploaded building
- * models) and context elements (everything else, such as the provisioned
- * surroundings). Terrain elements are grouped separately: they cast no
- * shadows and are colored through the ground texture, but their mesh is
- * what shadows are projected onto.
+ * Group the paths of all elements in the hierarchy into context elements
+ * (everything in a base layer, i.e. the surroundings shared between
+ * proposals) and design elements (everything else in the proposal, whether
+ * drawn natively in Forma or uploaded). Terrain elements are grouped
+ * separately: they cast no shadows and are colored through the ground
+ * texture, but their mesh is what shadows are projected onto.
+ *
+ * If the proposal has no base layer, falls back to treating elements
+ * imported through the integrate element system as design and everything
+ * else as context.
  */
 function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): ElementGroups {
   const groups: ElementGroups = { context: [], design: [], terrain: [] };
+  const hasBase = Object.keys(elements).some((urn) => isBaseElement(urn as Urn));
 
-  const walk = (urn: Urn, path: string, inDesign: boolean) => {
+  const walk = (urn: Urn, path: string, inBase: boolean, inDesign: boolean) => {
     const element = elements[urn];
     if (element == null) {
       return;
@@ -50,17 +59,18 @@ function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): E
       return;
     }
 
-    const isDesign = inDesign || getElementSystem(urn) === "integrate";
+    const isInBase = inBase || isBaseElement(urn);
+    const isDesign = hasBase ? !isInBase : inDesign || getElementSystem(urn) === "integrate";
     if (path !== "root") {
       (isDesign ? groups.design : groups.context).push(path);
     }
 
     for (const child of element.children ?? []) {
-      walk(child.urn, `${path}/${child.key}`, isDesign);
+      walk(child.urn, `${path}/${child.key}`, isInBase, isDesign);
     }
   };
 
-  walk(rootUrn, "root", false);
+  walk(rootUrn, "root", false, false);
   return groups;
 }
 
