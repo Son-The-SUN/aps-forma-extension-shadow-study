@@ -13,6 +13,7 @@ const DEFAULT_TERRAIN_COLOR = "#ffffff";
 type ElementGroups = {
   context: string[];
   design: string[];
+  terrain: string[];
 };
 
 /**
@@ -30,15 +31,22 @@ function isTerrainElement(urn: Urn, element: FormaElement): boolean {
  * Group the paths of all elements in the hierarchy into design elements
  * (imported through the integrate element system, e.g. uploaded building
  * models) and context elements (everything else, such as the provisioned
- * surroundings). Terrain elements are excluded since the terrain is colored
- * through the ground texture instead.
+ * surroundings). Terrain elements are grouped separately: they cast no
+ * shadows and are colored through the ground texture, but their mesh is
+ * what shadows are projected onto.
  */
 function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): ElementGroups {
-  const groups: ElementGroups = { context: [], design: [] };
+  const groups: ElementGroups = { context: [], design: [], terrain: [] };
 
   const walk = (urn: Urn, path: string, inDesign: boolean) => {
     const element = elements[urn];
-    if (element == null || isTerrainElement(urn, element)) {
+    if (element == null) {
+      return;
+    }
+    if (isTerrainElement(urn, element)) {
+      if (path !== "root") {
+        groups.terrain.push(path);
+      }
       return;
     }
 
@@ -133,7 +141,11 @@ export default function GeometryColorSelector() {
   const [designShadowsColor, setDesignShadowsColor] = useState(DEFAULT_DESIGN_SHADOWS_COLOR);
   const [terrainColor, setTerrainColor] = useState(DEFAULT_TERRAIN_COLOR);
 
-  const [elementGroups, setElementGroups] = useState<ElementGroups>({ context: [], design: [] });
+  const [elementGroups, setElementGroups] = useState<ElementGroups>({
+    context: [],
+    design: [],
+    terrain: [],
+  });
   const [rootUrn, setRootUrn] = useState<Urn | undefined>();
 
   const setContextColorDebounced = useMemo(() => debounce(setContextColor, 50), []);
@@ -212,10 +224,13 @@ export default function GeometryColorSelector() {
 
   useEffect(() => {
     if (elementGroups.context.length > 0 || elementGroups.design.length > 0) {
-      shadowOverlay.loadGeometry({
-        context: topLevelPaths(elementGroups.context),
-        design: topLevelPaths(elementGroups.design),
-      });
+      shadowOverlay.loadGeometry(
+        {
+          context: topLevelPaths(elementGroups.context),
+          design: topLevelPaths(elementGroups.design),
+        },
+        elementGroups.terrain,
+      );
     }
   }, [elementGroups]);
 
