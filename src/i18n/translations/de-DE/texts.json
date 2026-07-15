@@ -10,7 +10,8 @@
     "terrain": "Gelände",
     "resetColors": "Farben zurücksetzen",
     "contextShadows": "Kontextschatten",
-    "designShadows": "Entwurfsschatten"
+    "designShadows": "Entwurfsschatten",
+    "shadowOpacity": "Deckkraft der Schatten"
   },
   "date": {
     "label": "Datum"

@@ -10,7 +10,8 @@
     "terrain": "지형",
     "resetColors": "색상 재설정",
     "contextShadows": "컨텍스트 그림자",
-    "designShadows": "설계 그림자"
+    "designShadows": "설계 그림자",
+    "shadowOpacity": "그림자 불투명도"
   },
   "date": {
     "label": "날짜"

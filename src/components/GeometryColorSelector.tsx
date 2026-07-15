@@ -2,7 +2,7 @@ import { Forma } from "forma-embedded-view-sdk/auto";
 import { useEffect, useMemo, useState } from "preact/hooks";
 import { FormaElement, Urn } from "forma-embedded-view-sdk/elements/types";
 import { useTranslation } from "../i18n/useTranslation";
-import { shadowOverlay } from "../shadowOverlay";
+import { DEFAULT_SHADOW_OPACITY, shadowOverlay } from "../shadowOverlay";
 
 const DEFAULT_CONTEXT_BUILDINGS_COLOR = "#cccccc";
 const DEFAULT_DESIGN_BUILDINGS_COLOR = "#ffffff";
@@ -150,6 +150,7 @@ export default function GeometryColorSelector() {
   const [contextShadowsColor, setContextShadowsColor] = useState(DEFAULT_CONTEXT_SHADOWS_COLOR);
   const [designShadowsColor, setDesignShadowsColor] = useState(DEFAULT_DESIGN_SHADOWS_COLOR);
   const [terrainColor, setTerrainColor] = useState(DEFAULT_TERRAIN_COLOR);
+  const [shadowOpacity, setShadowOpacity] = useState(DEFAULT_SHADOW_OPACITY);
 
   const [elementGroups, setElementGroups] = useState<ElementGroups>({
     context: [],
@@ -163,6 +164,7 @@ export default function GeometryColorSelector() {
   const setContextShadowsColorDebounced = useMemo(() => debounce(setContextShadowsColor, 50), []);
   const setDesignShadowsColorDebounced = useMemo(() => debounce(setDesignShadowsColor, 50), []);
   const setTerrainColorDebounced = useMemo(() => debounce(setTerrainColor, 50), []);
+  const setShadowOpacityDebounced = useMemo(() => debounce(setShadowOpacity, 50), []);
 
   useEffect(() => {
     Forma.proposal.getRootUrn().then((rootUrn) => {
@@ -256,6 +258,7 @@ export default function GeometryColorSelector() {
         color: designShadowsColor,
       },
       terrain: { enabled: shouldPaintTerrain, color: terrainColor },
+      shadowOpacity,
     });
   }, [
     shouldPaintContextShadows,
@@ -264,6 +267,7 @@ export default function GeometryColorSelector() {
     contextShadowsColor,
     designShadowsColor,
     terrainColor,
+    shadowOpacity,
     showContext,
     showDesign,
   ]);
@@ -279,6 +283,7 @@ export default function GeometryColorSelector() {
     setContextShadowsColor(DEFAULT_CONTEXT_SHADOWS_COLOR);
     setDesignShadowsColor(DEFAULT_DESIGN_SHADOWS_COLOR);
     setTerrainColor(DEFAULT_TERRAIN_COLOR);
+    setShadowOpacity(DEFAULT_SHADOW_OPACITY);
   };
 
   return (
@@ -312,6 +317,27 @@ export default function GeometryColorSelector() {
         color={designShadowsColor}
         setColor={setDesignShadowsColorDebounced}
       />
+      <div class="row">
+        <div class="row-title" style={{ width: "60%" }}>
+          {t("colorConfig.shadowOpacity")}
+        </div>
+        <div class="row-item">
+          <input
+            type="range"
+            class="opacity-slider"
+            min="5"
+            max="100"
+            step="5"
+            value={Math.round(shadowOpacity * 100)}
+            onInput={(e) => {
+              if (e.target instanceof HTMLInputElement) {
+                setShadowOpacityDebounced(Number(e.target.value) / 100);
+              }
+            }}
+          />
+          <span class="opacity-value">{Math.round(shadowOpacity * 100)}%</span>
+        </div>
+      </div>
       <ColorRow
         label={t("colorConfig.terrain")}
         checked={shouldPaintTerrain}

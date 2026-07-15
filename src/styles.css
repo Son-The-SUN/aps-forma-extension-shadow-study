@@ -69,6 +69,20 @@ weave-select {
   font-size: 11px;
 }
 
+.opacity-slider {
+  margin-left: 10px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.opacity-value {
+  margin-left: 8px;
+  min-width: 32px;
+  text-align: right;
+  font-size: 11px;
+}
+
 .color-picker {
   margin-left: 10px;
   width: 40%;

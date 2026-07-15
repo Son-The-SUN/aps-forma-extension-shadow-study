@@ -10,7 +10,8 @@
     "terrain": "Terräng",
     "resetColors": "Återställ färger",
     "contextShadows": "Kontextskuggor",
-    "designShadows": "Designskuggor"
+    "designShadows": "Designskuggor",
+    "shadowOpacity": "Skuggopacitet"
   },
   "date": {
     "label": "Datum"

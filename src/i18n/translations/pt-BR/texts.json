@@ -10,7 +10,8 @@
     "terrain": "Terreno",
     "resetColors": "Redefinir cores",
     "contextShadows": "Sombras de contexto",
-    "designShadows": "Sombras de projeto"
+    "designShadows": "Sombras de projeto",
+    "shadowOpacity": "Opacidade das sombras"
   },
   "date": {
     "label": "Data"

@@ -10,7 +10,8 @@
     "terrain": "Terep",
     "resetColors": "Színek visszaállítása",
     "contextShadows": "Környezeti árnyékok",
-    "designShadows": "Tervezett árnyékok"
+    "designShadows": "Tervezett árnyékok",
+    "shadowOpacity": "Árnyékok átlátszatlansága"
   },
   "date": {
     "label": "Dátum"

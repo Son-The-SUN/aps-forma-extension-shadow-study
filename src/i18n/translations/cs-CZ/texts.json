@@ -10,7 +10,8 @@
     "terrain": "Terén",
     "resetColors": "Obnovit barvy",
     "contextShadows": "Stíny okolních budov",
-    "designShadows": "Stíny navrhovaných budov"
+    "designShadows": "Stíny navrhovaných budov",
+    "shadowOpacity": "Neprůhlednost stínů"
   },
   "date": {
     "label": "Datum"

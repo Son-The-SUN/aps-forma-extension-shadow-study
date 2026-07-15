@@ -7,10 +7,13 @@ export type ShadowOverlaySettings = {
   contextShadows: { enabled: boolean; color: string };
   designShadows: { enabled: boolean; color: string };
   terrain: { enabled: boolean; color: string };
+  /** Opacity of the shadow fills, in the range 0..1. */
+  shadowOpacity: number;
 };
 
+export const DEFAULT_SHADOW_OPACITY = 0.55;
+
 const GROUND_TEXTURE_NAME = "shadow-study";
-const SHADOW_ALPHA = 0.55;
 const SUN_POLL_INTERVAL_MS = 500;
 /** Upper bound on the ground texture canvas dimensions, in pixels. */
 const MAX_TEXTURE_SIZE = 8192;
@@ -202,6 +205,7 @@ class ShadowOverlay {
     contextShadows: { enabled: false, color: "#4d4d4d" },
     designShadows: { enabled: false, color: "#31437c" },
     terrain: { enabled: false, color: "#ffffff" },
+    shadowOpacity: DEFAULT_SHADOW_OPACITY,
   };
 
   private textureVisible = false;
@@ -649,7 +653,7 @@ class ShadowOverlay {
     }
     const { min, max } = this.bbox;
 
-    ctx.fillStyle = hexToRgba(color, SHADOW_ALPHA);
+    ctx.fillStyle = hexToRgba(color, Math.min(Math.max(this.settings.shadowOpacity, 0), 1));
     ctx.beginPath();
 
     const projected = new Float64Array(6);

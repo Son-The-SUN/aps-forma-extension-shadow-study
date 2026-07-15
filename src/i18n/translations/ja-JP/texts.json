@@ -10,7 +10,8 @@
     "terrain": "地形",
     "resetColors": "色をリセット",
     "contextShadows": "コンテキストの影",
-    "designShadows": "設計の影"
+    "designShadows": "設計の影",
+    "shadowOpacity": "影の不透明度"
   },
   "date": {
     "label": "日付"

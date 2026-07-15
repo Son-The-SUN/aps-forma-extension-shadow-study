@@ -10,7 +10,8 @@
     "terrain": "Terrein",
     "resetColors": "Kleuren opnieuw instellen",
     "contextShadows": "Contextschaduwen",
-    "designShadows": "Ontwerpschaduwen"
+    "designShadows": "Ontwerpschaduwen",
+    "shadowOpacity": "Dekking van schaduwen"
   },
   "date": {
     "label": "Datum"

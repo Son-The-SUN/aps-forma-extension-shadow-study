@@ -10,7 +10,8 @@
     "terrain": "Terræn",
     "resetColors": "Nulstil farver",
     "contextShadows": "Kontekstskygger",
-    "designShadows": "Designskygger"
+    "designShadows": "Designskygger",
+    "shadowOpacity": "Skyggeopacitet"
   },
   "date": {
     "label": "Dato"

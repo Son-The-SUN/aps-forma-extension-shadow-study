@@ -10,7 +10,8 @@
     "terrain": "地形",
     "resetColors": "重置颜色",
     "contextShadows": "周边阴影",
-    "designShadows": "设计阴影"
+    "designShadows": "设计阴影",
+    "shadowOpacity": "阴影不透明度"
   },
   "date": {
     "label": "日期"
