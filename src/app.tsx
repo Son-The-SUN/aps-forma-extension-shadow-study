@@ -21,7 +21,10 @@ export default function App() {
 
   return (
     <>
-      <h1>{t("header.title")}</h1>
+      <h1>
+        <img class="header-logo" src="./Shadow_16px.svg" alt="" width="16" height="16" />
+        {t("header.title")}
+      </h1>
       <DateSelector month={month} setMonth={setMonth} day={day} setDay={setDay} />
       <TimeSelector
         startHour={startHour}
