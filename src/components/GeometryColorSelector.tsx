@@ -64,7 +64,7 @@ function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): E
   const contextIds = new Set<string>();
   const designEntries: { path: string; id: string }[] = [];
 
-  const walk = (urn: Urn, path: string, inBase: boolean, inDesign: boolean) => {
+  const walk = (urn: Urn, path: string, inBase: boolean, inContext: boolean, inDesign: boolean) => {
     const element = elements[urn];
     if (element == null) {
       return;
@@ -77,7 +77,12 @@ function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): E
     }
 
     const isInBase = inBase || isBaseElement(urn);
-    const isDesign = hasBase ? !isInBase : inDesign || getElementSystem(urn) === "integrate";
+    // Elements inside a context container are context regardless of their
+    // own system: an integrate-system element moved into the base must stop
+    // counting as design.
+    const isDesign = hasBase
+      ? !isInBase
+      : !inContext && (inDesign || getElementSystem(urn) === "integrate");
     if (path !== "root") {
       if (isDesign) {
         designEntries.push({ path, id: getElementId(urn) });
@@ -88,11 +93,17 @@ function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): E
     }
 
     for (const child of element.children ?? []) {
-      walk(child.urn, `${path}/${child.key}`, isInBase, isDesign);
+      walk(
+        child.urn,
+        `${path}/${child.key}`,
+        isInBase,
+        inContext || (path !== "root" && !isDesign),
+        isDesign,
+      );
     }
   };
 
-  walk(rootUrn, "root", false, false);
+  walk(rootUrn, "root", false, false, false);
 
   for (const entry of designEntries) {
     if (contextIds.has(entry.id)) {
