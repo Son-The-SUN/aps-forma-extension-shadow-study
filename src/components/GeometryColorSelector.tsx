@@ -32,6 +32,16 @@ function isBaseElement(urn: Urn): boolean {
 }
 
 /**
+ * The revision-independent identity of an element (`{system}:{authcontext}:{id}`),
+ * so the same element can be recognized when it is referenced from more than
+ * one place in the hierarchy, e.g. from both the base and the proposal after
+ * a "Move to base".
+ */
+function getElementId(urn: Urn): string {
+  return urn.split(":").slice(2, 5).join(":");
+}
+
+/**
  * Group the paths of all elements in the hierarchy into context elements
  * (everything in a base layer, i.e. the surroundings shared between
  * proposals) and design elements (everything else in the proposal, whether
@@ -42,10 +52,17 @@ function isBaseElement(urn: Urn): boolean {
  * If the proposal has no base layer, falls back to treating elements
  * imported through the integrate element system as design and everything
  * else as context.
+ *
+ * An element moved to the base ("Move to base") can still be referenced from
+ * the proposal side of the hierarchy; since the base is what defines context,
+ * every reference to such an element is treated as context so it stops
+ * counting as design.
  */
 function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): ElementGroups {
   const groups: ElementGroups = { context: [], design: [], terrain: [] };
   const hasBase = Object.keys(elements).some((urn) => isBaseElement(urn as Urn));
+  const contextIds = new Set<string>();
+  const designEntries: { path: string; id: string }[] = [];
 
   const walk = (urn: Urn, path: string, inBase: boolean, inDesign: boolean) => {
     const element = elements[urn];
@@ -62,7 +79,12 @@ function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): E
     const isInBase = inBase || isBaseElement(urn);
     const isDesign = hasBase ? !isInBase : inDesign || getElementSystem(urn) === "integrate";
     if (path !== "root") {
-      (isDesign ? groups.design : groups.context).push(path);
+      if (isDesign) {
+        designEntries.push({ path, id: getElementId(urn) });
+      } else {
+        groups.context.push(path);
+        contextIds.add(getElementId(urn));
+      }
     }
 
     for (const child of element.children ?? []) {
@@ -71,6 +93,15 @@ function groupElementPaths(rootUrn: Urn, elements: Record<Urn, FormaElement>): E
   };
 
   walk(rootUrn, "root", false, false);
+
+  for (const entry of designEntries) {
+    if (contextIds.has(entry.id)) {
+      console.debug(`[shadow-study] ${entry.path} is also part of the base -- treating as context`);
+      groups.context.push(entry.path);
+    } else {
+      groups.design.push(entry.path);
+    }
+  }
   return groups;
 }
 
